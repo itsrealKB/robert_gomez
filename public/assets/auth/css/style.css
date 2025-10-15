@@ -1,0 +1,213 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: "poppins", sans-serif;
+}
+:root {
+    --white: #ffffff;
+    --primary-color: #0067d2;
+    --secondary-color: #04468b;
+}
+.bg-primary {
+    background-color: var(--primary-color);
+}
+.bg-secondary {
+    background-color: var(--secondary-color) !important;
+}
+
+.login-sec {
+    background: url(../images/login-bg.png), no-repeat, center;
+    background-size: cover;
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.login-sec img {
+    margin-bottom: 60px;
+}
+
+.login-wrapper {
+    background-color: #ffffffb8;
+    border: 1px solid #707070;
+    padding: 75px 125px;
+}
+
+.field-icon-area {
+    height: 78px;
+    width: 6px;
+    background-color: var(--primary-color);
+    position: absolute;
+}
+
+.form-floating input {
+    height: 80px !important;
+    border-radius: 0px;
+    background-color: var(--white);
+    width: 100%;
+    color: #707070;
+    font-size: 18px ;
+}
+
+.form-floating label {
+    color: #707070;
+    padding: 20px 27px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+.form-floating>.form-control:not(:placeholder-shown) {
+    padding: 42px 26px 18px;
+}
+
+.form-floating i {
+    position: absolute;
+    right: 30px;
+    font-size: 22px;
+    color: #8AABCC;
+    top: 31px;
+}
+
+.toggle-password {
+    cursor: pointer;
+}
+.checkbox-wrap input {
+    height: 25px;
+    width: 24px;
+    accent-color: var(--white);
+}
+
+.checkbox-wrap label {
+    color: #707070;
+    font-size: 14px;
+}
+.login-btn-area {
+    margin: 30px 0px;
+}
+
+.login-btn-area button, .login-btn-area a {
+    color: var(--white);
+    font-size: 16px;
+    padding: 13px;
+    border-radius: 50px;
+    border: none;
+    background-color: var(--secondary-color);
+    width: 205px;
+}
+
+.login-btn-area a  {
+    padding: 16px 32px !important;
+    text-decoration: none;
+    margin-top: 47px;
+}
+.forget-wrap p {
+    color: #707070;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+.forget-wrap p a {
+    color: #707070;
+    font-weight: 600;
+}
+
+.forget-text {
+    color: var(--primary-color);
+    font-size: 20px;
+}
+
+.forget-desc {
+    color: #707070;
+    font-size: 15px;
+    margin: 25px 0px;
+}
+
+.update-img {
+    width: 114px;
+    margin-bottom: 35px !important;
+}
+
+
+.modal-bg-custom {
+    background: rgb(255 255 255 / 71%);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 8%);
+    backdrop-filter: blur(19px);
+}
+
+.modal-bg-custom .modal-dialog {
+    transform: none;
+    height: 100%;
+    margin-top: 0;
+    display: flex;
+    max-width: unset !important;
+    margin-bottom: 0;
+}
+
+.modal-bg-custom .modal-content {
+    padding: 40px;
+    position: relative;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 760px !important;
+    border-radius: 7px;
+    outline: 0;
+}
+.modal-content .claim-para {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+.modal-content .sub-head {
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    margin-bottom: 25px;
+}
+
+.modal-bg-custom .modal-header {
+    display: block;
+}
+
+.modal-bg-custom .modal-body {
+    border: 1px solid #707070;
+    padding: 25px;
+}
+.modal-body .sub-head {
+    height: 70px;
+    /* overflow: auto; */
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.info-desc .pay-btn {
+    padding: 11px 34px;
+    color: var(--white);
+    background-color: var(--secondary-color);
+    font-size: 14px;
+    border: none;
+    border-radius: 50px;
+    margin: 15px 0px;
+}
+
+
+#exampleModal3 .modal-bg-custom .modal-content {
+    padding: 0px !important;
+}
+
+#exampleModal3 .modal-body .sub-head {
+    height: unset;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+

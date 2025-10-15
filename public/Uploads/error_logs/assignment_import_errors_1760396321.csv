@@ -1,0 +1,3 @@
+Row,insurance,owner_name,owner_phone,owner_email,claim_number,claim_type,loss_type,vehicle_location,appointment_date,Errors
+2,fadslj,owner1,2342342342,owner1@gmail.com,claim-123x,asdfas,damage,Sydney,1/10/2026 11:01,The appointment_date must be a valid datetime (e.g.  12/1/2025 10:30:00 AM).
+3,fadslj,owner2,2342342343,owner1@gmail.com,claim-123x,asdfas,damage,Sydney,1/11/2026 11:01,The appointment_date must be a valid datetime (e.g.  12/1/2025 10:30:00 AM).

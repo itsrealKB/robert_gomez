@@ -1,0 +1,5 @@
+insurance,owner_name,owner_phone,owner_email,claim,claim_type,loss_type,vehicle_location,appointment_date
+"State Farm","John Doe","123-456-7890","johndoe@email.com","C-12345","Damage","Collision","123 Main St","2025-10-20"
+"Allstate",,"555-555-5555","invalid_email","C-54321","Theft","Theft","456 Oak Ave","2025-05-15"
+"Progressive","Jane Smith",,"janesmith@email.com","C-98765",,"Fire","789 Pine Rd",""
+"Geico","Mark Johnson","9999999999","valid@email.com","C-11223",,,"101 Elm Blvd",
