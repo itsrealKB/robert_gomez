@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Assignment\Payment\StoreRequest as PaymentStoreReque
 use App\Http\Requests\Admin\Assignment\StoreRequest;
 use App\Imports\AssignmentsImport;
 use App\Models\Assignment;
+use App\Models\AssignmentDocument;
 use App\Models\AssignmentPayment;
 use App\Models\ClientForm;
 use App\Models\GeneralForm;
@@ -286,6 +287,37 @@ class AssignmentController extends Controller
         $guideline = Guideline::latest()->first();
 
         return view('screens.admin.assignment.files', get_defined_vars());
+    }
+
+    public function destroy(Request $request)
+    {
+
+        try {
+            $ids = $request->input('ids', [$request->input('id')]);
+            $ids = array_filter($ids, fn($id) => !is_null($id));
+
+            if (empty($ids)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'No IDs provided for deletion.'
+                ], 400);
+            }
+
+            DB::transaction(function () use ($ids) {
+                AssignmentDocument::whereIn('id', $ids)->delete();
+            });
+
+
+            return response()->json([
+                'status' => true,
+                'message' => count($ids) > 1 ? 'Documents deleted successfully.' : 'Document deleted successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to delete document(s). Please try again.'
+            ], 500);
+        }
     }
 
     public function paymentDetailStore(PaymentStoreRequest $request): JsonResponse

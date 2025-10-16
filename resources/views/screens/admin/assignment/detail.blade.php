@@ -18,15 +18,15 @@
                     <div class="view-wrapper mt-0">
                         <div class="inner-head-wrap2 mb-5">
                             <ul class="inner-head3">
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">View</li>
-                                </a>
+                                </a> --}}
 
                                 <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Print</li>
                                 </a>
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Edit</li>
                                 </a>
 
@@ -36,21 +36,21 @@
 
                                 <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Dispatch</li>
-                                </a>
+                                </a> --}}
 
                                 <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Messages</li>
                                 </a>
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Billing</li>
-                                </a>
+                                </a> --}}
 
                                 <a href="{{ route('admin.assign.files', $assignment->id) }}" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Files</li>
                                 </a>
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Actions</li>
                                 </a>
 
@@ -65,7 +65,7 @@
                                 <button class="link text-decoration-none open-modal-btn" type="button"
                                     onclick="openModal()">
                                     <li class="inner-list inner-list-1">Schedule Appointments</li>
-                                </button>
+                                </button> --}}
                             </ul>
                         </div>
 
@@ -162,7 +162,7 @@
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="4">No Results Found</td>
+                                                            <td colspan="4" class="text-center">No Results Found</td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>
@@ -175,10 +175,12 @@
                                         </button>
                                     </div>
 
-                                    <div class="pay-info px-4 mt-3">
-                                        <h5>Pay Change Request Info</h5>
-                                        <p>{{ $assignment->payment_info ?? 'No Request Has Been Sent Yet.' }}</p>
-                                    </div>
+                                    @isset($assignment->payment_info)
+                                        <div class="pay-info px-4 mt-3">
+                                            <h5>Change Request Info</h5>
+                                            <p>{{ $assignment->payment_info }}</p>
+                                        </div>
+                                    @endisset
                                 </div>
                             </div>
 

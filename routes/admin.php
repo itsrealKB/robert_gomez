@@ -20,6 +20,8 @@ Route::prefix('assignments')->controller(AssignmentController::class)->name('ass
     Route::get('detail/{id}', 'detail')->name('detail');
     Route::get('files/{id}', 'files')->name('files');
 
+    Route::post('destroy', 'destroy')->name('files.destroy');
+
     Route::post('search', 'searchAssign')->name('search');
 
     Route::post('assignment-payment/store', 'paymentDetailStore')->name('payment.store');

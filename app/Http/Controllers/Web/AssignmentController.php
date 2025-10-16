@@ -183,6 +183,7 @@ class AssignmentController extends Controller
                 AssignmentDocument::whereIn('id', $ids)->delete();
             });
 
+
             return response()->json([
                 'status' => true,
                 'message' => count($ids) > 1 ? 'Documents deleted successfully.' : 'Document deleted successfully.'

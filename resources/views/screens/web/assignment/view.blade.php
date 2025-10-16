@@ -101,29 +101,10 @@
                                                 </tr>
 
                                                 @empty
-
-                                                <tr colspan="3">No Results found</tr>
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">No Results found</td>
+                                                    </tr>
                                                 @endforelse
-                                                {{-- <tr>
-                                                    <th scope="row">Base Rate</th>
-                                                    <td>+</td>
-                                                    <td>$0.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Base Rate</th>
-                                                    <td>+</td>
-                                                    <td>$0.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Base Rate</th>
-                                                    <td>+</td>
-                                                    <td>$0.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Base Rate</th>
-                                                    <td>+</td>
-                                                    <td>$0.00</td>
-                                                </tr> --}}
                                             </tbody>
                                         </table>
                                     </div>
@@ -132,10 +113,13 @@
                                         Pay Change</button>
                                 </div>
 
-                                <div class="pay-info px-4 mt-3">
-                                    <h5>Pay Change Request Info</h5>
-                                    <p>{{ $assignment->payment_info ?? 'No Request Has Been Sent Yet.' }}</p>
-                                </div>
+                                @isset($assignment->payment_info)
+
+                                    <div class="pay-info px-4 mt-3">
+                                        <h5>Change Request Info</h5>
+                                        <p>{{ $assignment->payment_info}}</p>
+                                    </div>
+                                @endisset
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -946,7 +930,7 @@
                     <p class="sub-head">Based on agreed rates your compensation for this claim would be</p>
                 </div>
                 <div class="modal-header info-desc p-0">
-                    <table class="table text-start">
+                    {{-- <table class="table text-start">
                         <thead>
                             <tr>
                                 <th></th>
@@ -981,16 +965,41 @@
                                 <td>$ 0.00</td>
                             </tr>
                         </tbody>
-                    </table>
-                    <p class="sub-head">Based on agreed rates your compensation for this claim would be</p>
+                    </table> --}}
+                    {{-- <p class="sub-head">Based on agreed rates your compensation for this claim would be</p> --}}
                 </div>
-                <div class="modal-body">
-                    <div>
+                <div class="modal-body info-desc">
+                    {{-- <div>
                         <p class="sub-head m-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
                             printer took a galley of type and scrambled it to make a type specimen book. It has survived not
                             only five centuries, but also the leap into electronic typesetting, remaining essentially
                             unchanged.</p>
+                    </div> --}}
+                    <div class="table-responsive mb-2" style="max-height:150px;">
+                        <table class="table text-start table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Billing Type</th>
+                                    <th scope="col" >Miles</th>
+                                    <th scope="col" colspan="2">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($assignment->assignment_payments as $payment)
+                                <tr>
+                                    <th scope="row">{{ $payment->billing_type }}</th>
+                                    <td>{{ $payment->miles }}</td>
+                                    <td>${{ $payment->price }}</td>
+                                </tr>
+
+                                @empty
+                                <tr>
+                                   <td colspan="3" class="text-center">No Results found</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center info-desc gap-3">

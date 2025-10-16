@@ -19,7 +19,7 @@
                 <div class="docs-wrapper">
                     <div class="search-wrap">
                         <div class="search-left">
-                        <button>Upload EMS</button>
+                            {{-- <button>Upload EMS</button> --}}
                             <button data-bs-toggle="modal" data-bs-target="#exampleModal3">+ Add Files</button>
                             <button id="downloadAll" >Download All</button>
 
@@ -88,7 +88,7 @@
                                                                 Download </a></button>
                                                                 <li><button class="dropdown-item edit-btn" data-id="{{ $document->id }}">Edit</button></li>
                                                     </li>
-                                                    <li class="drp-list"><button class="dropdown-item  delete-btn"
+                                                    <li class="drp-list"><button class="dropdown-item delete-btn"
                                                             data-id="{{ $document->id }}">Delete</button></li>
                                                 </ul>
                                             </div>

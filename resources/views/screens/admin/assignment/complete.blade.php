@@ -233,7 +233,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="container">No Results Found</div>
+                        <div class="container text-center">No Results Found</div>
                     @endforelse
                 </div>
             </div>

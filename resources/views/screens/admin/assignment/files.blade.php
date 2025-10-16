@@ -124,39 +124,39 @@
                     <div class="view-wrapper mt-0">
                         <div class="inner-head-wrap2 mb-5">
                             <ul class="inner-head3">
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">View</li>
-                                </a>
+                                </a> --}}
 
                                 <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Print</li>
                                 </a>
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Edit</li>
-                                </a>
+                                </a> --}}
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Cancel</li>
                                 </a>
 
                                 <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Dispatch</li>
-                                </a>
+                                </a> --}}
 
                                 <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Messages</li>
                                 </a>
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Billing</li>
-                                </a>
+                                </a> --}}
 
                                 <a href="{{ route('admin.assign.files', $assignment->id) }}" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Files</li>
                                 </a>
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Actions</li>
                                 </a>
 
@@ -166,12 +166,12 @@
 
                                 <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Notepad</li>
-                                </a>
+                                </a> --}}
 
-                                <button class="link text-decoration-none open-modal-btn" type="button"
+                                {{-- <button class="link text-decoration-none open-modal-btn" type="button"
                                     onclick="openModal()">
                                     <li class="inner-list inner-list-1">Schedule Appointments</li>
-                                </button>
+                                </button> --}}
                             </ul>
                         </div>
 
@@ -416,7 +416,7 @@
                                                                         Download </a></button>
                                                                         <li><button class="dropdown-item edit-btn" data-id="{{ $document->id }}">Edit</button></li>
                                                             </li>
-                                                            <li class="drp-list"><button class="dropdown-item  delete-btn"
+                                                            <li class="drp-list"><button class="dropdown-item delete-btn"
                                                                     data-id="{{ $document->id }}">Delete</button></li>
                                                         </ul>
                                                     </div>
@@ -1475,299 +1475,299 @@
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $('.file-icon').each(function() {
-                    var fileType = $(this).data('type').toLowerCase();
-                    var iconSrc = '';
+    <script>
+        $(document).ready(function() {
+            $('.file-icon').each(function() {
+                var fileType = $(this).data('type').toLowerCase();
+                var iconSrc = '';
 
-                    if (fileType.includes('word') || fileType === 'doc' || fileType === 'docx') {
-                        iconSrc = '{{ asset('assets/web/images/word-2.webp') }}';
-                    } else if (fileType === 'pdf') {
-                        iconSrc = '{{ asset('assets/web/images/pdf-img.jpg') }}';
-                    } else if (fileType === 'jpg' || fileType === 'jpeg' || fileType === 'png' || fileType ===
-                        'gif' || fileType === 'jfif') {
-                        iconSrc = '{{ asset('assignment-docs') }}' + "/" + $(this).data('file');
-                    } else {
-                        iconSrc = '{{ asset('assets/web/images/no_image.png') }}';
-                    }
-                    $(this).attr('src', iconSrc);
-                });
-
-                $('.delete-btn').on("click", function() {
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You want to delete file",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            var id = $(this).attr("data-id");
-
-                            $.LoadingOverlay("show");
-                            $.ajax({
-                                type: 'POST',
-                                url: '{{ route('docs.destroy') }}',
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    id: id,
-                                },
-                                success: function(response) {
-                                    console.log(response);
-
-                                    $.LoadingOverlay("hide");
-
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Success',
-                                        text: 'File Deleted Successfully',
-                                        confirmButtonText: 'OK'
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            location.reload();
-                                        }
-                                    });
-                                },
-                                error: function(xhr, status, error) {
-                                    $.LoadingOverlay("hide");
-
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: 'An error occurred, please try again.',
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
-                                    });
-                                }
-                            })
-                        }
-                    })
-                })
+                if (fileType.includes('word') || fileType === 'doc' || fileType === 'docx') {
+                    iconSrc = '{{ asset('assets/web/images/word-2.webp') }}';
+                } else if (fileType === 'pdf') {
+                    iconSrc = '{{ asset('assets/web/images/pdf-img.jpg') }}';
+                } else if (fileType === 'jpg' || fileType === 'jpeg' || fileType === 'png' || fileType ===
+                    'gif' || fileType === 'jfif') {
+                    iconSrc = '{{ asset('assignment-docs') }}' + "/" + $(this).data('file');
+                } else {
+                    iconSrc = '{{ asset('assets/web/images/no_image.png') }}';
+                }
+                $(this).attr('src', iconSrc);
             });
-        </script>
 
-        <script>
-            $(document).ready(function() {
-                function initTableFeatures($table, $pagination) {
-                    var rowsPerPage = 10;
-                    var $rows = $table.find('tbody tr');
-                    var totalRows = $rows.length;
-                    var totalPages = Math.ceil(totalRows / rowsPerPage);
-                    var currentPage = 1;
-                    var $searchInput = $('.head-search-input');
-                    var noResultsMessage =
-                        '<tr class="no-results"><td colspan="7" style="text-align: center;">No results found</td></tr>';
+            $('.delete-btn').on("click", function() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You want to delete file",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var id = $(this).attr("data-id");
 
-                    function updateTable() {
-                        var searchValue = $searchInput.val().toLowerCase().trim();
-                        $rows.hide();
-                        $table.find('.no-results').remove();
+                        $.LoadingOverlay("show");
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ route('admin.assign.files.destroy') }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                id: id,
+                            },
+                            success: function(response) {
+                                console.log(response);
 
-                        var filteredRows = $rows.filter(function() {
-                            var $row = $(this);
-                            for (var i = 0; i < $row.find('td').length; i++) {
-                                var cellText = $row.find('td').eq(i).text().toLowerCase();
-                                if (cellText.includes(searchValue)) {
-                                    return true;
-                                }
+                                $.LoadingOverlay("hide");
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: 'File Deleted Successfully',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                $.LoadingOverlay("hide");
+
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'An error occurred, please try again.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
                             }
-                            return false;
-                        });
-
-                        totalRows = filteredRows.length;
-                        totalPages = Math.ceil(totalRows / rowsPerPage);
-
-                        if (totalRows > 0) {
-                            $pagination.show();
-                            var start = (currentPage - 1) * rowsPerPage;
-                            var end = start + rowsPerPage;
-                            filteredRows.slice(start, end).show();
-                        } else {
-                            $table.find('tbody').append(noResultsMessage);
-                            $pagination.hide();
-                        }
-
-                        updatePagination();
+                        })
                     }
+                })
+            })
+        });
+    </script>
 
-                    function updatePagination() {
-                        $pagination.find('.page').remove();
-                        for (var i = 1; i <= totalPages; i++) {
-                            var $pageButton = $('<button class="page">' + i + '</button>');
-                            if (i === currentPage) {
-                                $pageButton.addClass('active-page');
+    <script>
+        $(document).ready(function() {
+            function initTableFeatures($table, $pagination) {
+                var rowsPerPage = 10;
+                var $rows = $table.find('tbody tr');
+                var totalRows = $rows.length;
+                var totalPages = Math.ceil(totalRows / rowsPerPage);
+                var currentPage = 1;
+                var $searchInput = $('.head-search-input');
+                var noResultsMessage =
+                    '<tr class="no-results"><td colspan="7" style="text-align: center;">No results found</td></tr>';
+
+                function updateTable() {
+                    var searchValue = $searchInput.val().toLowerCase().trim();
+                    $rows.hide();
+                    $table.find('.no-results').remove();
+
+                    var filteredRows = $rows.filter(function() {
+                        var $row = $(this);
+                        for (var i = 0; i < $row.find('td').length; i++) {
+                            var cellText = $row.find('td').eq(i).text().toLowerCase();
+                            if (cellText.includes(searchValue)) {
+                                return true;
                             }
-                            $pageButton.insertBefore($pagination.find('.next'));
                         }
+                        return false;
+                    });
 
-                        $pagination.find('.prev').prop('disabled', currentPage === 1);
-                        $pagination.find('.next').prop('disabled', currentPage === totalPages);
-                    }
+                    totalRows = filteredRows.length;
+                    totalPages = Math.ceil(totalRows / rowsPerPage);
 
                     if (totalRows > 0) {
                         $pagination.show();
-                        updateTable();
+                        var start = (currentPage - 1) * rowsPerPage;
+                        var end = start + rowsPerPage;
+                        filteredRows.slice(start, end).show();
                     } else {
                         $table.find('tbody').append(noResultsMessage);
                         $pagination.hide();
                     }
 
-                    $pagination.on('click', '.page', function() {
-                        currentPage = parseInt($(this).text());
-                        updateTable();
-                    });
-
-                    $pagination.on('click', '.prev', function() {
-                        if (currentPage > 1) {
-                            currentPage--;
-                            updateTable();
-                        }
-                    });
-
-                    $pagination.on('click', '.next', function() {
-                        if (currentPage < totalPages) {
-                            currentPage++;
-                            updateTable();
-                        }
-                    });
-
-                    $searchInput.on('input', function() {
-                        currentPage = 1;
-                        updateTable();
-                    });
+                    updatePagination();
                 }
 
-                var $table = $('.assign-table-2');
-                var $pagination = $('.pagination');
-                if ($table.length && $pagination.length) {
-                    initTableFeatures($table, $pagination);
-                }
-            });
-        </script>
-
-        <script>
-            $(document).ready(function() {
-                $('#masterCheckbox').on('change', function() {
-                    $('.slaveCheckbox').prop('checked', this.checked);
-                });
-
-                $(document).on('change', '.slaveCheckbox', function() {
-                    var totalCheckboxes = $('.slaveCheckbox').length;
-                    var checkedCheckboxes = $('.slaveCheckbox:checked').length;
-                    $('#masterCheckbox').prop('checked', totalCheckboxes === checkedCheckboxes &&
-                        totalCheckboxes > 0);
-                });
-
-                $('#deleteSelected').on('click', function() {
-                    var selectedIds = [];
-                    $('.slaveCheckbox:checked').each(function() {
-                        selectedIds.push($(this).data('id'));
-                    });
-
-                    if (selectedIds.length === 0) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'No Selection',
-                            text: 'Please select at least one file to delete.',
-                            confirmButtonText: 'OK'
-                        });
-                        return;
+                function updatePagination() {
+                    $pagination.find('.page').remove();
+                    for (var i = 1; i <= totalPages; i++) {
+                        var $pageButton = $('<button class="page">' + i + '</button>');
+                        if (i === currentPage) {
+                            $pageButton.addClass('active-page');
+                        }
+                        $pageButton.insertBefore($pagination.find('.next'));
                     }
-                    console.log(selectedIds)
+
+                    $pagination.find('.prev').prop('disabled', currentPage === 1);
+                    $pagination.find('.next').prop('disabled', currentPage === totalPages);
+                }
+
+                if (totalRows > 0) {
+                    $pagination.show();
+                    updateTable();
+                } else {
+                    $table.find('tbody').append(noResultsMessage);
+                    $pagination.hide();
+                }
+
+                $pagination.on('click', '.page', function() {
+                    currentPage = parseInt($(this).text());
+                    updateTable();
+                });
+
+                $pagination.on('click', '.prev', function() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        updateTable();
+                    }
+                });
+
+                $pagination.on('click', '.next', function() {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        updateTable();
+                    }
+                });
+
+                $searchInput.on('input', function() {
+                    currentPage = 1;
+                    updateTable();
+                });
+            }
+
+            var $table = $('.assign-table-2');
+            var $pagination = $('.pagination');
+            if ($table.length && $pagination.length) {
+                initTableFeatures($table, $pagination);
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#masterCheckbox').on('change', function() {
+                $('.slaveCheckbox').prop('checked', this.checked);
+            });
+
+            $(document).on('change', '.slaveCheckbox', function() {
+                var totalCheckboxes = $('.slaveCheckbox').length;
+                var checkedCheckboxes = $('.slaveCheckbox:checked').length;
+                $('#masterCheckbox').prop('checked', totalCheckboxes === checkedCheckboxes &&
+                    totalCheckboxes > 0);
+            });
+
+            $('#deleteSelected').on('click', function() {
+                var selectedIds = [];
+                $('.slaveCheckbox:checked').each(function() {
+                    selectedIds.push($(this).data('id'));
+                });
+
+                if (selectedIds.length === 0) {
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: `You want to delete ${selectedIds.length} selected file(s)?`,
                         icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete them!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.LoadingOverlay("show");
-                            $.ajax({
-                                type: 'POST',
-                                url: '{{ route('docs.destroy') }}',
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    ids: selectedIds
-                                },
-                                success: function(response) {
-                                    console.log(response);
-                                    $.LoadingOverlay("hide");
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Success',
-                                        text: 'Selected files deleted successfully!',
-                                        confirmButtonText: 'OK'
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            location.reload();
-                                        }
-                                    });
-                                },
-                                error: function(xhr, status, error) {
-                                    $.LoadingOverlay("hide");
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: xhr.responseJSON?.message ||
-                                            'An error occurred while deleting files. Please try again.',
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
-                                    });
-                                }
-                            });
-                        }
+                        title: 'No Selection',
+                        text: 'Please select at least one file to delete.',
+                        confirmButtonText: 'OK'
                     });
-                });
-            });
+                    return;
+                }
 
-            $(document).ready(function() {
-                const downloadRoute = "{{ route('download.all.zip', $assignment->id) }}";
-
-                $('#downloadAll').on('click', function() {
-                    // Check if there are any documents in the table
-                    if ($('.table-row-2 tr').length === 0 || $('.table-row-2').find('.no-results').length > 0) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'No Documents Available',
-                            text: 'There are no documents available to download.',
-                            confirmButtonText: 'OK'
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: `You want to delete ${selectedIds.length} selected file(s)?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete them!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.LoadingOverlay("show");
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ route('admin.assign.files.destroy') }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                ids: selectedIds
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                $.LoadingOverlay("hide");
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: 'Selected files deleted successfully!',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                $.LoadingOverlay("hide");
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: xhr.responseJSON?.message ||
+                                        'An error occurred while deleting files. Please try again.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
                         });
-                        return;
                     }
-
-                    Swal.fire({
-                        title: 'Download Confirmation',
-                        text: "Are you sure you want to download all assignment documents as a zip file?",
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Download!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // If the user clicks "Yes, Download!", redirect to the Laravel route
-                            window.location.href = downloadRoute;
-
-                            // Optional: Show a "download started" message immediately
-                            Swal.fire({
-                                title: 'Download Started!',
-                                text: 'Your zip file is being prepared and will start downloading shortly.',
-                                icon: 'success',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
-                        }
-                    });
                 });
             });
+        });
+
+        $(document).ready(function() {
+            const downloadRoute = "{{ route('download.all.zip', $assignment->id) }}";
+
+            $('#downloadAll').on('click', function() {
+                // Check if there are any documents in the table
+                if ($('.table-row-2 tr').length === 0 || $('.table-row-2').find('.no-results').length > 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No Documents Available',
+                        text: 'There are no documents available to download.',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Download Confirmation',
+                    text: "Are you sure you want to download all assignment documents as a zip file?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Download!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If the user clicks "Yes, Download!", redirect to the Laravel route
+                        window.location.href = downloadRoute;
+
+                        // Optional: Show a "download started" message immediately
+                        Swal.fire({
+                            title: 'Download Started!',
+                            text: 'Your zip file is being prepared and will start downloading shortly.',
+                            icon: 'success',
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+            });
+        });
 
         $(document).ready(function() {
             const btnSave = document.querySelector(".save-upload");
@@ -2341,7 +2341,7 @@
                                 $.LoadingOverlay("show");
                                 $.ajax({
                                     type: 'POST',
-                                    url: '{{ route('docs.destroy') }}',
+                                    url: "{{ route('admin.assign.files.destroy') }}",
                                     data: {
                                         _token: "{{ csrf_token() }}",
                                         id: btn.getAttribute("data-id")
@@ -2407,5 +2407,5 @@
             downloadSingle();
             editRow();
         });
-        </script>
+    </script>
 @endpush
