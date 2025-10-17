@@ -64,8 +64,6 @@ class AssignmentController extends Controller
 
         $reason = $request->reason == null ? null : $request->reason;
 
-
-
         $user = $request->accept == 0 ? null : $assignment->user_id;
 
         $route = $request->accept == 0 ? route('dashboard') : route('view', $id);
@@ -82,8 +80,6 @@ class AssignmentController extends Controller
             'user_id' => $user,
             'status' => 'pending'
         ]);
-
-
 
         return response()->json([
             'status' => 'true',

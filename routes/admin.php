@@ -17,8 +17,10 @@ Route::prefix('assignments')->controller(AssignmentController::class)->name('ass
     Route::post('bulk-upload', 'upload')->name('upload');
     Route::get('task-assigned', 'task')->name('task');  // Single view
     Route::get('complete', 'completeAssign')->name('complete');  // Single view
+    Route::get('map', 'assignmentsMap')->name('assignments.map');  // Single view
     Route::get('detail/{id}', 'detail')->name('detail');
     Route::get('files/{id}', 'files')->name('files');
+    Route::post('file/{id}/update', 'updateFile')->name('update.file');
 
     Route::post('destroy', 'destroy')->name('files.destroy');
 
@@ -28,6 +30,9 @@ Route::prefix('assignments')->controller(AssignmentController::class)->name('ass
     Route::get('assignment-payment/edit/{id}', 'assignmentPaymentEdit')->name('payment.edit');
     Route::post('assignment-payment/update/{id}', 'assignmentPaymentUpdate')->name('payment.update');
     Route::post('assignment-payment/destroy', 'assignmentPaymentDestroy')->name('payment.destroy');
+
+    // Locations
+    Route::get('location/{location}', 'getZipCode');
 });
 
 Route::prefix('users')->controller(UserController::class)->name('users.')->group(function () {

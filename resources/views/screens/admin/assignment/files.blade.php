@@ -408,11 +408,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" style="">
                                                             <li class="drp-list"><button
-                                                                    class="dropdown-item  download-file"
+                                                                    class="dropdown-item download-file"
                                                                     file-name="Table-image.png"><a
                                                                         href="{{ asset('assignment-docs/' . $document->file) }}"
                                                                         download class="drp-list"
-                                                                        style="text-decoration: none; color:#000;width:100%">
+                                                                        style="text-decoration: none; color:#fff;width:100%">
                                                                         Download </a></button>
                                                                         <li><button class="dropdown-item edit-btn" data-id="{{ $document->id }}">Edit</button></li>
                                                             </li>
@@ -2198,7 +2198,7 @@
 
                             $.ajax({
                                 type: 'POST',
-                                url: '{{ route('update.docs', ':id') }}'.replace(':id', editingDocumentId),
+                                url: "{{ route('admin.assign.update.file', ':id') }}".replace(':id', editingDocumentId),
                                 data: formData,
                                 processData: false,
                                 contentType: false,

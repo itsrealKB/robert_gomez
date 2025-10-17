@@ -39,7 +39,7 @@ Route::middleware(['prevent-back-history', 'CheckAgent'])->group(function () {
     Route::controller(AssignmentController::class)->group(function () {
 
         Route::get('accept-reject/{id}', 'isAccept_view')->name('reject');
-        Route::post('accept-reject/{id}', 'isAccept');
+        Route::post('accept-reject/{id}', 'isAccept')->name('accept.reject');
         Route::get('/ChangePhase/{id}', 'change_phase_view')->name('changephase');
         Route::post('assignment-status', 'updateStatus')->name('assign.status');
         Route::get('/Docs/{id}', 'docs_view')->name('docs');

@@ -217,13 +217,20 @@
                                                     <th scope="row">{{ $log->user->first_name }}</th>
                                                     <td>{{ $log->created_at }}</td>
                                                     <td>
-                                                        {{ $log->is_accept == null || $log->is_accept == 1 ? 'Assigned' : '' }}
-                                                        @if ($log->is_accept !== null && $log->is_accept != 1)
+                                                        @if ($log->is_accept == 1)
+                                                            <button class="rejection-reason"
+                                                                style="background:none;border:none"
+                                                                data-id="{{ $log->id }}"
+                                                                data-rejection-reason="{{ $log->reason_rejection }}">Accepted
+                                                                <i class="fa-solid fa-eye"></i></button>
+                                                        @elseif($log->is_accept !== null && $log->is_accept == 0)
                                                             <button class="rejection-reason"
                                                                 style="background:none;border:none"
                                                                 data-id="{{ $log->id }}"
                                                                 data-rejection-reason="{{ $log->reason_rejection }}">Rejected
                                                                 <i class="fa-solid fa-eye"></i></button>
+                                                        @elseif($log->is_accept == null)
+                                                            {{ 'Assigned' }}
                                                         @endif
                                                     </td>
                                                 </tr>

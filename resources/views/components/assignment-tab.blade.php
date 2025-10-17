@@ -16,7 +16,7 @@
              <a href="{{ route('admin.assign.complete') }}" class="link text-decoration-none">
                  <li class="inner-list inner-list-1">Complete Assignments</li>
              </a>
-             <a href="assignment-map.html" class="link text-decoration-none">
+             <a href="{{ route('admin.assign.assignments.map') }}" class="link text-decoration-none">
                  <li class="inner-list inner-list-1">Assignments Map</li>
              </a>
          </ul>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\GeoCodeHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Assignment\FilesRequest;
 use App\Http\Requests\Admin\Assignment\Payment\StoreRequest as PaymentStoreRequest;
 use App\Http\Requests\Admin\Assignment\StoreRequest;
 use App\Imports\AssignmentsImport;
@@ -16,6 +18,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AssignmentController extends Controller
@@ -231,6 +234,21 @@ class AssignmentController extends Controller
         return view('screens.admin.assignment.complete', get_defined_vars());
     }
 
+    public function assignmentsMap()
+    {
+        $appraisers = User::where([
+                ['role' , 'agent']
+            ])->get();
+
+        return view('screens.admin.assignment.map', compact('appraisers'));
+    }
+
+    // Locatons
+    public function getZipCode($location)
+    {
+        dd(GeoCodeHelper::geocodeZipCode($location));
+    }
+
     public function searchAssign(Request $request)
     {
 
@@ -287,6 +305,35 @@ class AssignmentController extends Controller
         $guideline = Guideline::latest()->first();
 
         return view('screens.admin.assignment.files', get_defined_vars());
+    }
+
+    public function updateFile($id, FilesRequest $request)
+    {
+
+        $document = AssignmentDocument::find($id);
+        // dd($document);
+
+        if ($request->has('file')) {
+
+            $timestamp = time();
+            $randomString = Str::random(8);
+            $extension = $request->file->getClientOriginalExtension();
+            $fileName = "doc_{$timestamp}_{$randomString}.{$extension}";
+
+            $request->file->move(public_path('assignment-docs/'), $fileName);
+
+            $document->update([
+                'file' => $fileName,
+                'file_type' => $extension
+            ]);
+        }
+
+
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'file Uploaded successfully.',
+        ]);
     }
 
     public function destroy(Request $request)

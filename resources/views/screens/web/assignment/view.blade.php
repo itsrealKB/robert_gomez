@@ -63,7 +63,7 @@
                                 <div class="info-desc text-center">
                                     <p class="mod-btn">You must ACCEPT or REJECT the claim to proceed</p>
                                     <div class="d-flex mb-3 gap-5">
-                                        <p class="claim-para" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-check"></i> Accept Claim</p>
+                                        <p class="claim-para" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#accept-claim-modal"><i class="fa-solid fa-check"></i> Accept Claim</p>
                                         <p class="claim-para"><i class="fa-solid fa-minus"></i> <a
                                                 href="{{ route('reject', $assignment->id) }}"
                                                 class="text-decoration-none">Reject Claim</a>
@@ -158,12 +158,20 @@
                                                 <th scope="row">{{ $log->user->first_name }}</th>
                                                 <td>{{ $log->created_at }}</td>
                                                 <td>
-                                                    {{ $log->is_accept == null || $log->is_accept == 1 ? 'Assigned' : '' }}
-                                                    @if ($log->is_accept !== null && $log->is_accept != 1)
-                                                        <button class="rejection-reason" style="background:none;border:none"
+                                                    @if ($log->is_accept == 1)
+                                                        <button class="rejection-reason"
+                                                            style="background:none;border:none"
                                                             data-id="{{ $log->id }}"
-                                                            data-rejection-reason="{{ $log->reason_rejection }}">Rejected <i
-                                                                class="fa-solid fa-eye"></i></button>
+                                                            data-rejection-reason="{{ $log->reason_rejection }}">Accepted
+                                                            <i class="fa-solid fa-eye"></i></button>
+                                                    @elseif($log->is_accept !== null && $log->is_accept == 0)
+                                                        <button class="rejection-reason"
+                                                            style="background:none;border:none"
+                                                            data-id="{{ $log->id }}"
+                                                            data-rejection-reason="{{ $log->reason_rejection }}">Rejected
+                                                            <i class="fa-solid fa-eye"></i></button>
+                                                    @elseif($log->is_accept == null)
+                                                        {{ 'Assigned' }}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -920,8 +928,8 @@
         </div>
     </section>
 
-    <!-- Modal -->
-    <div class="modal fade modal-bg-custom " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    {{-- Accept Claim Modal --}}
+    <div class="modal fade modal-bg-custom " id="accept-claim-modal" tabindex="-1" aria-labelledby="acceptClaimModalLabel"
         aria-modal="true" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -930,52 +938,8 @@
                     <p class="sub-head">Based on agreed rates your compensation for this claim would be</p>
                 </div>
                 <div class="modal-header info-desc p-0">
-                    {{-- <table class="table text-start">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Miles</th>
-                                <th>Payment</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Base Fee</td>
-                                <td></td>
-                                <td>$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>MI Roundtrip</td>
-                                <td>0000</td>
-                                <td>$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>Free Miles</td>
-                                <td>0000</td>
-                                <td>$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>Paid Miles</td>
-                                <td>0000</td>
-                                <td>$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>Total Appraisal Payment</td>
-                                <td>00.00</td>
-                                <td>$ 0.00</td>
-                            </tr>
-                        </tbody>
-                    </table> --}}
-                    {{-- <p class="sub-head">Based on agreed rates your compensation for this claim would be</p> --}}
                 </div>
                 <div class="modal-body info-desc">
-                    {{-- <div>
-                        <p class="sub-head m-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                            printer took a galley of type and scrambled it to make a type specimen book. It has survived not
-                            only five centuries, but also the leap into electronic typesetting, remaining essentially
-                            unchanged.</p>
-                    </div> --}}
                     <div class="table-responsive mb-2" style="max-height:150px;">
                         <table class="table text-start table-bordered">
                             <thead>
@@ -1001,16 +965,28 @@
                             </tbody>
                         </table>
                     </div>
+                    <p>Claim Accept Details : </p>
+                    <div>
+                        <form id="accept-claim-form">
+                            @csrf
+                            <textarea id="accept-claim-detail" name="reason" cols="0" rows="3" style="width:100%; padding: 0 10px;"></textarea>
+                            <input type="hidden" name="id" value="{{ $assignment->id }}"/>
+                            <input type="hidden" name="accept" value="1"/>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-center info-desc gap-3">
-                    <button type="button" class="pay-btn text-center bg-primary" data-bs-dismiss="modal">Accept
-                        Claim</button>
+                    <button
+                        class="pay-btn text-center bg-primary">
+                        Accept Claim
+                    </button>
+                    </form>
                     <button type="button" class="pay-btn text-center" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
 
+    {{-- Request Pay Change Modal --}}
     <div class="modal fade modal-bg-custom " id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2"
         aria-modal="true" role="dialog">
         <div class="modal-dialog">
@@ -1036,28 +1012,12 @@
                                 <td>${{ $payment->price }}</td>
                             </tr>
                             @empty
-                            <tr colspan="3">No Results Found</tr>
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    No Results Found
+                                </td>
+                            </tr>
                             @endforelse
-                            {{-- <tr>
-                                <td>MI Roundtrip</td>
-                                <td>0000</td>
-                                <td>$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>Free Miles</td>
-                                <td>0000</td>
-                                <td>$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>Paid Miles</td>
-                                <td>0000</td>
-                                <td>$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>Total Appraisal Payment</td>
-                                <td>00.00</td>
-                                <td>$ 0.00</td>
-                            </tr> --}}
                         </tbody>
                     </table>
                     <p class="sub-head">Mileage Request Info:</p>
@@ -1065,7 +1025,6 @@
                 <div class="modal-body" style="padding:0px;">
                     <div>
                         <textarea name="" id="payment_info" cols="0" rows="7" style="width:100%; height:100%" required>{{ $assignment?->payment_info }}</textarea>
-
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center info-desc gap-3">
@@ -1333,6 +1292,64 @@
                     confirmButtonText: 'OK'
                 });
             });
+
+            // Accept The Claim
+            $('#accept-claim-form').on('submit', function(e){
+                e.preventDefault();
+                let formData = new FormData(this);
+                let id = formData.get('id');
+                let claimAcceptedDetail =  formData.get('reason');
+                if(!claimAcceptedDetail){
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Claim Accept Details Are Required',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    type : 'POST',
+                    url : "{{ route('accept.reject',':id') }}".replace(':id',id),
+                    data : formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend : function()
+                    {
+                        $.LoadingOverlay("show");
+                    },
+                    success : function(response)
+                    {
+                        $.LoadingOverlay('hide');
+                        Swal.fire({
+                            title: 'Info',
+                            text: 'Claim Accepted Successfully.',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    },
+                    error : function(error)
+                    {
+                        let errorMessage = error.responseJSON ? error.responseJSON.message : error.statusText;
+                        $.LoadingOverlay('hide');
+                        Swal.fire({
+                            title: 'Error',
+                            text: errorMessage,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    }
+                })
+            })
         });
     </script>
 @endpush
