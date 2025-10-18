@@ -27,7 +27,15 @@ class UpdateRequest extends FormRequest
             'phone' => 'required|min:8|max:15',
             'address' => 'required',
             'password' => 'string|min:8|max:16',
-            'role' => 'required'
+            'role' => 'required',
+            'zip_code' => 'required|numeric|min:0'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'zip_code.min' => 'Zip code should be in positive'
         ];
     }
 }

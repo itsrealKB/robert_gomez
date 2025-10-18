@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\GeoCodeHelper;
+use App\Helpers\Haversine;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Assignment\FilesRequest;
 use App\Http\Requests\Admin\Assignment\Payment\StoreRequest as PaymentStoreRequest;
@@ -234,6 +235,7 @@ class AssignmentController extends Controller
         return view('screens.admin.assignment.complete', get_defined_vars());
     }
 
+    // View Assignment Map
     public function assignmentsMap()
     {
         $appraisers = User::where([
@@ -241,6 +243,138 @@ class AssignmentController extends Controller
             ])->get();
 
         return view('screens.admin.assignment.map', compact('appraisers'));
+    }
+
+    public function findAssignmentMap(Request $request){
+
+        // if($request->zip_code){
+        //     $request->validate(
+        //         [
+        //             'zip_code' => 'exists:users,zip_code'
+        //         ],
+        //         [
+        //             'zip_code.exists' => "This ($request->zip_code) Zip Code Is Not In Our Data"
+        //         ]
+        //     );
+        // }
+
+        $assignments = Assignment::when($request->search_by_date === 'yes',
+            function ($query) use ($request) {
+                        return $query->whereDate('appointment_date', '>=', $request->start_date)
+                            ->whereDate('appointment_date', '<=', $request->end_date);
+                }
+            )
+            ->when($request->show_completed === 'yes',
+            function($query) {
+                    return $query->where('status','completed');
+                }
+            )
+            ->when($request->submitted_files === 'yes',
+                function($query){
+                    return $query->whereHas('docs');
+                }
+            )
+            ->when($request->submitted_files === 'no',
+                function($query){
+                    return $query->whereDoesntHave('docs');
+                }
+            )
+            ->when($request->filled('appraisers'),
+                function($query) use ($request) {
+                    return $query->whereIn('user_id', $request->appraisers);
+                }
+            )
+            ->with('user')
+            ->get();
+
+        $users = [];
+
+        // When No Appraisers Found - Without Zip Code.
+        if($assignments->isEmpty())
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'No Appraisers Data Found With Your Given Details',
+                'data' => []
+            ],200);
+        }
+
+        // Appraisers When No Zip Code Provided.
+        if(!$request->filled('zip_code'))
+        {
+            foreach($assignments as $assignment){
+                if($assignment->user){
+                    $userId = $assignment->user->id;
+                    // Check If The Appraiser Aleardy Exists
+                    if(!isset($users[$userId])){
+                        $user = $assignment->user->toArray();
+                        $user['pendingAssignments'] = $assignment->user->pendingAssignments();
+                        $users[$userId] = $user;
+                    }
+
+                }
+            }
+
+            // If The Appraiser's Found.
+            if(count($users) > 0){
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Appraisers Found!',
+                    'data' => $users
+                ],200);
+            }
+            // If The Appraiser's Not Found.
+            else{
+                return response()->json([
+                    'status' => false,
+                    'message' => "No Appraisers Found!",
+                    'data' => $users
+                ],200);
+            }
+        }
+        // Appraisers When Zip Code Provided.
+        else{
+            // Getting Lat, Long Of Given Zip Code
+            $loc = GeoCodeHelper::geocodeZipCode($request->zip_code);
+
+            foreach($assignments as $assignment){
+                if($assignment->user){
+                    $userId = $assignment->user->id;
+                    // Getting Appraiser's Lat & Long.
+                    $userLoc = ['latitude' => $assignment->user->latitude, 'longitude' => $assignment->user->longitude];
+                    // Calculating the distance b/w the given zip code and user's zip code.
+                    $distance = Haversine::calculate($loc['latitude'], $loc['longitude'], $userLoc['latitude'], $userLoc['longitude']);
+
+                    // Checking If The Appraiser Is In Radius Of The Given Zip Code & Storing Them In An Array.
+                    if ($distance <= $request->radius) {
+                        // Check If The Appraiser Aleardy Exists
+                        if(!isset($users[$userId])){
+                            $user = $assignment->user->toArray();
+                            $user['pendingAssignments'] = $assignment->user->pendingAssignments();
+                            $users[$userId] = $user;
+                        }
+                    }
+                }
+            }
+
+            // If The Appraiser's Found.
+            if(count($users) > 0){
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Appraisers Found!',
+                    'data' => $users
+                ],200);
+            }
+            // If The Appraiser's Not Found.
+            else{
+                return response()->json([
+                    'status' => false,
+                    'message' => "No Appraisers Found Around $request->radius KM Radius Of This ($request->zip_code) Zip Code!",
+                    'data' => $users
+                ],200);
+            }
+        }
+
     }
 
     // Locatons

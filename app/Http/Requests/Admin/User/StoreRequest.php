@@ -27,7 +27,15 @@ class StoreRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|max:16',
             'phone' => 'required|min:8|max:15',
-            'address' => 'required'
+            'address' => 'required',
+            'zip_code' => 'required|numeric|min:0'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'zip_code.min' => 'Zip code should be in positive'
         ];
     }
 }

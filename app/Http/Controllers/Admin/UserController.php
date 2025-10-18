@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\GeoCodeHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreRequest;
 use App\Http\Requests\Admin\User\UpdateRequest;
@@ -21,6 +22,16 @@ class UserController extends Controller
 
     public function store(StoreRequest $request): JsonResponse
     {
+        $long_lat = User::where('zip_code', $request->zip_code)->first(['latitude','longitude']);
+
+        if(!$long_lat){
+
+            $location = GeoCodeHelper::geocodeZipCode($request->zip_code);
+        }
+        else{
+
+            $location = ['latitude' => $long_lat->latitude, 'longitude' => $long_lat->longitude];
+        }
 
         $agent = User::create([
             'first_name' => $request->first_name,
@@ -30,6 +41,9 @@ class UserController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'role' => $request->role,
+            'zip_code' => $request->zip_code,
+            'latitude' => $location['latitude'],
+            'longitude' => $location['longitude'],
         ]);
 
         return response()->json([
@@ -40,10 +54,7 @@ class UserController extends Controller
 
     function edit($id)
     {
-
         $user = User::find($id);
-
-        // dd($user);
 
         return response()->json([
             'status' => 'true',
@@ -54,8 +65,16 @@ class UserController extends Controller
 
     public function update(UpdateRequest $request, $id)
     {
+        $long_lat = User::where('zip_code', $request->zip_code)->first(['latitude','longitude']);
 
-        // dd($request->all());
+        if(!$long_lat){
+
+            $location = GeoCodeHelper::geocodeZipCode($request->zip_code);
+        }
+        else{
+
+            $location = ['latitude' => $long_lat->latitude, 'longitude' => $long_lat->longitude];
+        }
 
         $user = User::find($id);
 
@@ -64,7 +83,10 @@ class UserController extends Controller
             'last_name' => $request->last_name,
             'phone' => $request->phone,
             'address' => $request->address,
-            'role' => $request->role
+            'role' => $request->role,
+            'zip_code' => $request->zip_code,
+            'latitude' => $location['latitude'],
+            'longitude' => $location['longitude'],
         ];
 
         // Add password to update data if provided

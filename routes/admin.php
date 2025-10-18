@@ -18,6 +18,7 @@ Route::prefix('assignments')->controller(AssignmentController::class)->name('ass
     Route::get('task-assigned', 'task')->name('task');  // Single view
     Route::get('complete', 'completeAssign')->name('complete');  // Single view
     Route::get('map', 'assignmentsMap')->name('assignments.map');  // Single view
+    Route::post('map', 'findAssignmentMap')->name('assignments.map.find');  // Map Find
     Route::get('detail/{id}', 'detail')->name('detail');
     Route::get('files/{id}', 'files')->name('files');
     Route::post('file/{id}/update', 'updateFile')->name('update.file');

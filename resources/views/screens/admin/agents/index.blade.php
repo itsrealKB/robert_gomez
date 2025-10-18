@@ -1,161 +1,163 @@
 @extends('layouts.admin.app')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
-<style>
-    /* Modal Base */
-    .modal {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        background: rgba(0, 0, 0, 0.5) !important;
-        display: flex;
-        justify-content: center !important;
-        align-items: center !important;
-        z-index: 99999 !important;
-    }
-
-    .swal2-container {
-        z-index: 999999 !important;
-    }
-
-    .modal-content {
-        background: #fff;
-        border-radius: 6px;
-        width: 600px !important;
-        max-height: 90vh;
-        overflow-y: auto;
-        animation: zoomIn 0.3s ease;
-    }
-
-    @keyframes zoomIn {
-        from {
-            transform: scale(0.9);
-            opacity: 0;
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
+    <style>
+        /* Modal Base */
+        .modal {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            display: flex;
+            justify-content: center !important;
+            align-items: center !important;
+            z-index: 99999 !important;
         }
 
-        to {
-            transform: scale(1);
-            opacity: 1;
+        .swal2-container {
+            z-index: 999999 !important;
         }
-    }
 
-    /* Header */
-    .modal-header {
-        background: #007bff;
-        color: #fff;
-        padding: 12px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 6px 6px 0 0;
-    }
+        .modal-content {
+            background: #fff;
+            border-radius: 6px;
+            width: 600px !important;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: zoomIn 0.3s ease;
+        }
 
-    .modal-header h2 {
-        margin: 0;
-        font-size: 18px;
-    }
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
 
-    .close-modal {
-        font-size: 22px;
-        cursor: pointer;
-    }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-    /* Form Layout */
-    .modal-form {
-        padding: 20px;
-    }
+        /* Header */
+        .modal-header {
+            background: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 6px 6px 0 0;
+        }
 
-    .form-row {
-        display: flex;
-        gap: 15px;
-    }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
 
-    .form-group {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
+        .close-modal {
+            font-size: 22px;
+            cursor: pointer;
+        }
 
-    .form-group.full-width {
-        flex: 100%;
-    }
+        /* Form Layout */
+        .modal-form {
+            padding: 20px;
+        }
 
-    .form-group label {
-        font-weight: 600;
-        margin-bottom: 5px;
-    }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
 
-    .form-group input,
-    .form-group select {
-        padding: 8px 10px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        outline: none;
-    }
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .form-group input:focus {
-        border-color: #007bff;
-    }
+        .form-group.full-width {
+            flex: 100%;
+        }
 
-    /* Button */
-    .submit-btn {
-        width: 100%;
-        padding: 10px;
-        background: #007bff;
-        color: #fff;
-        font-weight: 600;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-    }
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
 
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-        -webkit-text-fill-color: black !important;
-    }
+        .form-group input,
+        .form-group select {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
 
-    .submit-btn:hover {
-        background: #0056b3;
-    }
+        .form-group input:focus {
+            border-color: #007bff;
+        }
 
-    .close-search-modal {
-        font-size: 25px;
-        cursor: pointer;
-    }
+        /* Button */
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-    /* Validation Messages */
-    .text-danger {
-        color: #e74c3c;
-        font-size: 12px;
-        margin-top: 5px;
-    }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+            -webkit-text-fill-color: black !important;
+        }
 
-    /* Toggle Classes */
-    .hidden-class {
-        display: none !important;
-    }
+        .submit-btn:hover {
+            background: #0056b3;
+        }
 
-    .smooth-toggle {
-        display: block;
-    }
+        .close-search-modal {
+            font-size: 25px;
+            cursor: pointer;
+        }
 
-    .rotate-icon {
-        transition: transform 0.3s ease;
-    }
+        /* Validation Messages */
+        .text-danger {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+        }
 
-    .rotate-icon.rotated {
-        transform: rotate(180deg);
-    }
+        /* Toggle Classes */
+        .hidden-class {
+            display: none !important;
+        }
+
+        .smooth-toggle {
+            display: block;
+        }
+
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .rotate-icon.rotated {
+            transform: rotate(180deg);
+        }
 
 
-    .hidden {
-        display: none;
-    }
-</style>
+        .hidden {
+            display: none;
+        }
+    </style>
+@endpush
 @section('content')
     <section class="content" style="min-height: 100vh;">
         <div class="container-fluid">
@@ -274,6 +276,11 @@
 
                 <div class="form-row">
                     <div class="form-group">
+                        <label class="text-white">Zip Code</label>
+                        <input type="number" id="zip-code" name="zip_code"/>
+                        <span class="text-danger error-msg" id="zip-code-error"></span>
+                    </div>
+                    <div class="form-group">
                         <label class="text-white">Role</label>
                         {{-- <input type="text" id="address" name="address"> --}}
                         <select name="role" style="opacity: 100%" id="role">
@@ -289,6 +296,7 @@
         </div>
     </div>
 
+    {{-- Update Agent Modal --}}
     <div id="editUserModal" class="modal" style="display:none;">
         <div class="modal-content">
             <div class="modal-header">
@@ -317,17 +325,16 @@
                         <span class="text-danger error-msg" id="edit_phone-error"></span>
                     </div>
                     <div class="form-group">
-                        <label class="text-light">Address</label>
-                        <input type="text" id="editAddress" name="address">
-                        <span class="text-danger error-msg" id="edit_address-error"></span>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
                         <label class="text-light">Password</label>
                         <input type="password" id="editPassword" name="edit_password">
                         <span class="text-danger error-msg" id="edit_password"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="text-white">Zip Code</label>
+                        <input type="number" id="zipCode" name="zip_code"/>
+                        <span class="text-danger error-msg" id="edit-zip-code-error"></span>
                     </div>
                     <div class="form-group">
                         <label class="text-white">Role</label>
@@ -337,6 +344,13 @@
                             <option value="admin">Admin</option>
                         </select>
                         <span class="text-danger error-msg" id="role-error"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="text-light">Address</label>
+                        <input type="text" id="editAddress" name="address">
+                        <span class="text-danger error-msg" id="edit_address-error"></span>
                     </div>
                 </div>
                 <button type="submit" id="editBtn" class="submit-btn">Update</button>
@@ -455,17 +469,9 @@
                 $(".modal").hide();
             });
 
+            // Add User
             $('#user-form').on("submit", function(e) {
                 e.preventDefault();
-                console.log($('#firstName').val());
-                console.log($('#lastName').val());
-                console.log($('#email').val());
-                console.log($('#password').val())
-                console.log($('#phone').val());
-                console.log($('#address').val());
-                console.log($('#role').find(":selected").val());
-
-
                 $.LoadingOverlay("show")
                 $.ajax({
                     type: 'POST',
@@ -478,6 +484,7 @@
                         password: $('#password').val(),
                         phone: $('#phone').val(),
                         address: $('#address').val(),
+                        zip_code: $('#zip-code').val(),
                         role: $('#role').find(":selected").val()
                     },
                     success: function(response) {
@@ -503,7 +510,12 @@
                             $('.error-msg').html(' ');
 
                             $.each(errors, function(key, value) {
-                                $(`#${key}-error`).html(`${value[0]}`);
+                                if(key === 'zip_code'){
+                                    $(`#zip-code-error`).html(`${value[0]}`);
+                                }
+                                else{
+                                    $(`#${key}-error`).html(`${value[0]}`);
+                                }
                             });
                         }
 
@@ -522,7 +534,7 @@
     <script>
         $(document).ready(function() {
 
-            // Edit User Button Click
+            // Edit User Form
             $(document).on('click', '.user-edit-btn', function() {
                 var userId = $(this).data('id');
                 $.LoadingOverlay("show");
@@ -533,14 +545,13 @@
                         $.LoadingOverlay("hide");
                         if (response.status === 'true') {
                             var user = response.publicuser;
-
-                            console.log('Fetched role:', user.role);
                             $('#editUserId').val(user.id);
                             $('#editFirstName').val(user.first_name);
                             $('#editLastName').val(user.last_name);
                             $('#editPhone').val(user.phone);
-                            $('#editAddress').val(user.address);
+                            $('#zipCode').val(user.zip_code);
                             $('#editRole').val(user.role).change();
+                            $('#editAddress').val(user.address);
                             $('#editUserModal').show();
                             $('#editUserModal').css("display", "flex");
                         } else {
@@ -566,7 +577,7 @@
                 });
             });
 
-
+            // Update User
             $(document).on("submit", '#edit-user-form', function(e) {
                 e.preventDefault();
                 $.LoadingOverlay("show");
@@ -584,8 +595,9 @@
                         first_name: $('#editFirstName').val(),
                         last_name: $('#editLastName').val(),
                         phone: $('#editPhone').val(),
-                        address: $('#editAddress').val(),
+                        zip_code: $('#zipCode').val(),
                         role: $('#editRole').find(":selected").val(),
+                        address: $('#editAddress').val(),
                         ...(password !== '' && {
                             password: password
                         })
@@ -609,8 +621,12 @@
                             const errors = xhr.responseJSON.errors;
                             $('.error-msg').html(''); // Clear previous errors
                             $.each(errors, function(key, value) {
-                                $(`#edit_${key}-error`).html(
-                                    `${value[0]}`); // e.g., #edit_role-error for 'role'
+                                if(key == 'zip_code'){
+                                    $('#edit-zip-code-error').html(`${value[0]}`);
+                                }
+                                else{
+                                    $(`#edit_${key}-error`).html(`${value[0]}`); // e.g., #edit_role-error for 'role'
+                                }
                             });
                         } else {
                             let errorMessage = 'An error occurred.';
@@ -632,7 +648,6 @@
     </script>
     <script>
         $(document).ready(function() {
-
 
             $(document).on('change', '.status', function() {
                 var $dropdown = $(this);

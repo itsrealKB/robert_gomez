@@ -18,17 +18,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'phone',
-        'role',
-        'address',
-        'avatar',
-        'email',
-        'status',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -53,9 +43,14 @@ class User extends Authenticatable
         ];
     }
 
-     public function getFullNameAttribute()
+    public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+     public function pendingAssignments()
+    {
+        return $this->hasMany(Assignment::class)->where('status', 'pending')->count();
     }
 
     public function assignments():HasMany
