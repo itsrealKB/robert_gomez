@@ -170,7 +170,9 @@
                                                             data-id="{{ $log->id }}"
                                                             data-rejection-reason="{{ $log->reason_rejection }}">Rejected
                                                             <i class="fa-solid fa-eye"></i></button>
-                                                    @elseif($log->is_accept == null)
+                                                    @elseif($log->is_accept == null && $log->user_id != $assignment->user_id)
+                                                            {{ 'Previously Assigned' }}
+                                                    @elseif($log->is_accept == null && $log->user_id == $assignment->user_id)
                                                         {{ 'Assigned' }}
                                                     @endif
                                                 </td>

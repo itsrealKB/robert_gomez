@@ -337,6 +337,15 @@ class AssignmentController extends Controller
             // Getting Lat, Long Of Given Zip Code
             $loc = GeoCodeHelper::geocodeZipCode($request->zip_code);
 
+            // If Non-Existing Zip Code Provided
+            if(!$loc){
+               return response()->json([
+                    'status' => false,
+                    'message' => "No Location Found With Given ($request->zip_code) Zip Code, Kindly Provide Valid Zip Code!",
+                    'data' => $users
+                ],status: 400);
+            }
+
             foreach($assignments as $assignment){
                 if($assignment->user){
                     $userId = $assignment->user->id;

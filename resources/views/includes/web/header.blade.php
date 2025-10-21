@@ -18,7 +18,7 @@
                     <button class="btn  dropdown-toggle position-relative" type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-regular fa-comment"></i>
-                        <span class="badge">2</span>
+                        {{-- <span class="badge">2</span> --}}
                     </button>
                     <ul class="dropdown-menu header-dropdown header-dropdown2 header-dropdown1">
                         <li class="d-flex justify-content-between">
@@ -68,7 +68,7 @@
                     <button class="btn  dropdown-toggle position-relative border-0" type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-regular fa-bell"></i>
-                        <span class="badge">2</span>
+                        {{-- <span class="badge">2</span> --}}
                     </button>
                     <ul class="dropdown-menu header-dropdown header-dropdown2">
                         <li class="d-flex justify-content-between">

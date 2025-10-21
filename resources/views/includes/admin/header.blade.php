@@ -49,7 +49,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
+                        {{-- <span class="badge badge-danger navbar-badge">3</span> --}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <a href="#" class="dropdown-item">
@@ -111,7 +111,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        {{-- <span class="badge badge-warning navbar-badge">15</span> --}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <span class="dropdown-item dropdown-header">15 Notifications</span>
@@ -195,80 +195,80 @@
             </ul>
           </li> -->
                         <li class="nav-item">
-                            <a href="{{ route('admin.index') }}" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="{{ route('admin.index') }}" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-sliders" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.assign.index') }}" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="{{ route('admin.assign.index') }}" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-list-check" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Assignments
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="{{ route('admin.users.index') }}" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-users" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Users
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="admin-CMS.html" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="admin-CMS.html" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-file-pen" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Admin CMS
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="#" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-file-invoice-dollar" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Accounting
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="#" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-file-contract" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Reports
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.settings.index') }}" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="{{ route('admin.settings.index') }}" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-gear" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Settings
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="#" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-link" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     ProLink
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="#" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-table-list" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Forms
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.logout') }}" class="nav-link">
-                                <img src="{{ asset('assets/admin/img/link-img-1.png') }}" alt="">
+                            <a href="{{ route('admin.logout') }}" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-right-from-bracket" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Logout
                                 </p>

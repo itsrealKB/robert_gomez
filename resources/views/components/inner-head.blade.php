@@ -120,20 +120,20 @@
         <a href="{{ route('reject',$assignment) }}" class="link text-decoration-none">
             <li class="inner-list inner-list-1">Accept / </br> Reject Assignments</li>
         </a>
-        <a href="#" class="link text-decoration-none">
+        {{-- <a href="#" class="link text-decoration-none">
             <li class="inner-list inner-list-1">Print Assignment</li>
         </a>
         <a href="{{ route('messagePg') }}" class="link text-decoration-none">
             <li class="inner-list inner-list-1">Messages</li>
-        </a>
+        </a> --}}
         <a href="{{ route('docs',$assignment) }}" class="link text-decoration-none">
             <li class="inner-list inner-list-1">Upload Files</li>
         </a>
         <a href="{{ route('changephase',$assignment) }}" class="link text-decoration-none">
             <li class="inner-list inner-list-1">Change Phase</li>
         </a>
-        <a href="#" class="link text-decoration-none">
+        {{-- <a href="#" class="link text-decoration-none">
             <li class="inner-list inner-list-1">Repairable / </br> Total Loss</li>
-        </a>
+        </a> --}}
     </ul>
 </div>

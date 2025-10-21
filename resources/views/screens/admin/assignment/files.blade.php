@@ -122,15 +122,19 @@
             <div class="container-fluid">
                 <div class="dashboard-content">
                     <div class="view-wrapper mt-0">
+                        <a href="{{ route('admin.assign.detail', $assignment->id) }}" class="btn btn-primary text-decoration-none" style="background-color: #0366d3;">
+                            <i class="fa-solid fa-arrow-left" style="font-size: 20px; margin-right: 7px;"></i>
+                            Back
+                        </a>
                         <div class="inner-head-wrap2 mb-5">
-                            <ul class="inner-head3">
+                            <ul class="inner-head3 justify-content-center">
                                 {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">View</li>
                                 </a> --}}
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Print</li>
-                                </a>
+                                </a> --}}
 
                                 {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Edit</li>
@@ -144,9 +148,9 @@
                                     <li class="inner-list inner-list-1">Dispatch</li>
                                 </a> --}}
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Messages</li>
-                                </a>
+                                </a> --}}
 
                                 {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Billing</li>
@@ -414,7 +418,7 @@
                                                                         download class="drp-list"
                                                                         style="text-decoration: none; color:#fff;width:100%">
                                                                         Download </a></button>
-                                                                        <li><button class="dropdown-item edit-btn" data-id="{{ $document->id }}">Edit</button></li>
+                                                                        {{-- <li><button class="dropdown-item edit-btn" data-id="{{ $document->id }}">Edit</button></li> --}}
                                                             </li>
                                                             <li class="drp-list"><button class="dropdown-item delete-btn"
                                                                     data-id="{{ $document->id }}">Delete</button></li>
@@ -2383,29 +2387,29 @@
                 );
             }
 
-            function editRow() {
-                document.querySelectorAll(".edit-btn").forEach((btn) => {
-                    btn.addEventListener("click", async () => {
-                        editingRow = btn.closest("tr");
-                        const fileName = editingRow.querySelector("td:nth-child(4)").textContent;
-                        editingDocumentId = btn.getAttribute("data-id"); // Store data-id
-                        currentImageSrc = '{{ asset('assignment-docs') }}/' + fileName;
+            // function editRow() {
+            //     document.querySelectorAll(".edit-btn").forEach((btn) => {
+            //         btn.addEventListener("click", async () => {
+            //             editingRow = btn.closest("tr");
+            //             const fileName = editingRow.querySelector("td:nth-child(4)").textContent;
+            //             editingDocumentId = btn.getAttribute("data-id"); // Store data-id
+            //             currentImageSrc = '{{ asset('assignment-docs') }}/' + fileName;
 
-                        // Convert server URL to data URL
-                        const dataUrl = await convertToDataURL(currentImageSrc);
-                        if (dataUrl) {
-                            currentImageSrc = dataUrl;
-                            openEditModal();
-                        }
-                        // Error handling is done in convertToDataURL
-                    });
-                });
-            }
+            //             // Convert server URL to data URL
+            //             const dataUrl = await convertToDataURL(currentImageSrc);
+            //             if (dataUrl) {
+            //                 currentImageSrc = dataUrl;
+            //                 openEditModal();
+            //             }
+            //             // Error handling is done in convertToDataURL
+            //         });
+            //     });
+            // }
 
             // Initialize event listeners
             deleteRow();
             downloadSingle();
-            editRow();
+            // editRow();
         });
     </script>
 @endpush

@@ -37,13 +37,9 @@ class AssignmentController extends Controller
     public function view($id)
     {
         $assignment = Assignment::find($id);
-
         $clientForms = ClientForm::all();
-
         $generalForms = GeneralForm::all();
-
         $guideline = Guideline::latest()->first();
-
 
         // $assignment= AssignmentLog::where('')
 

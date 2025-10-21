@@ -9,6 +9,9 @@
             -webkit-box-shadow: 0 0 0px 1000px white inset !important;
             -webkit-text-fill-color: black !important;
         }
+        #modal-xl-btn:hover, #modal-xl-btn:focus, #modal-xl-btn:active{
+            background-color: var(--blue1);
+        }
     </style>
     {{-- @dd($assignment) --}}
     <div class="content-wrapper">
@@ -17,14 +20,14 @@
                 <div class="dashboard-content">
                     <div class="view-wrapper mt-0">
                         <div class="inner-head-wrap2 mb-5">
-                            <ul class="inner-head3">
+                            <ul class="inner-head3 justify-content-center">
                                 {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">View</li>
                                 </a> --}}
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Print</li>
-                                </a>
+                                </a> --}}
 
                                 {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Edit</li>
@@ -38,9 +41,9 @@
                                     <li class="inner-list inner-list-1">Dispatch</li>
                                 </a> --}}
 
-                                <a href="#" class="link text-decoration-none">
+                                {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Messages</li>
-                                </a>
+                                </a> --}}
 
                                 {{-- <a href="#" class="link text-decoration-none">
                                     <li class="inner-list inner-list-1">Billing</li>
@@ -169,7 +172,7 @@
                                             </table>
                                         </div>
 
-                                        <button type="button" class="btn btn-default" id="modal-xl-btn" data-toggle="modal"
+                                        <button type="button" class="btn btn-default pay-btn" id="modal-xl-btn" data-toggle="modal"
                                             data-target="#modal-xl">
                                             Add Payment Details
                                         </button>
@@ -229,7 +232,9 @@
                                                                 data-id="{{ $log->id }}"
                                                                 data-rejection-reason="{{ $log->reason_rejection }}">Rejected
                                                                 <i class="fa-solid fa-eye"></i></button>
-                                                        @elseif($log->is_accept == null)
+                                                        @elseif($log->is_accept == null && $log->user_id != $assignment->user_id)
+                                                            {{ 'Previously Assigned' }}
+                                                        @elseif($log->is_accept == null && $log->user_id == $assignment->user_id)
                                                             {{ 'Assigned' }}
                                                         @endif
                                                     </td>

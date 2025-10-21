@@ -198,15 +198,14 @@
                                         @empty
                                         @endforelse
                                     </select>
-                                    <button type="button" class="eye-btn hidden-class"><i class="fa-solid fa-eye"></i>
-                                        3</button>
+                                    <button type="button" class="eye-btn hidden-class"><i class="fa-solid fa-eye"></i></button>
                                     <button type="button" class="toggler-btn"><i
                                             class="fa-solid fa-caret-down rotate-icon"></i></button>
                                 </div>
                             </div>
                             <div class="insurance-wrapper">
                                 <div>
-                                    <p><span>Insurance:</span> {{ $assignment->company }}</p>
+                                    <p class="insurance-heading"><span>Insurance:</span> {{ $assignment->company }}</p>
                                     <div class="other-desc-area hidden-class">
                                         <p><span>Owner: </span> {{ $assignment->owner }}</p>
                                         <p><span>Owner Phone:</span> {{ $assignment->owner_phone }}</p>
@@ -222,7 +221,7 @@
                                     <p class="text-end m-0" data-created-at="{{ $assignment->created_at }}">20 hours, 27
                                         mins </p>
                                     <div class="pending-btn-wrapper hidden-class">
-                                        <button>Quick Updates</button>
+                                        <button class="quick-updates-btn">Quick Updates</button>
                                         @if ($assignment->status == 'pending')
                                             <button style="background:#d3c501 !important;">Pending</button>
                                         @else
@@ -449,7 +448,6 @@
                 })
             })
         </script>
-
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const appointmentInput = document.getElementById('appointment');
@@ -462,10 +460,26 @@
                 appointmentInput.setAttribute('min', minDateTime);
             });
         </script>
-
         <script>
             $(document).ready(function() {
-                $('.toggler-btn').on('click', function() {
+
+                // $('.toggler-btn').on('click', function() {
+                //     var parentCard = $(this).closest('.assign-card');
+                //     var otherDescArea = parentCard.find('.other-desc-area');
+                //     var pendingBtnWrapper = parentCard.find('.pending-btn-wrapper');
+                //     var caretIcon = $(this).find('.rotate-icon');
+                //     var eyeBtn = parentCard.find('.eye-btn');
+
+                //     eyeBtn.toggleClass('hidden-class smooth-toggle');
+                //     otherDescArea.toggleClass('hidden-class smooth-toggle');
+                //     pendingBtnWrapper.toggleClass('hidden-class smooth-toggle');
+                //     caretIcon.toggleClass('rotated');
+                // });
+
+                $('.insurance-heading').on('click', toggleAssignmentCard);
+                $('.toggler-btn').on('click', toggleAssignmentCard);
+                function toggleAssignmentCard(e){
+                    e.stopPropagation();
                     var parentCard = $(this).closest('.assign-card');
                     var otherDescArea = parentCard.find('.other-desc-area');
                     var pendingBtnWrapper = parentCard.find('.pending-btn-wrapper');
@@ -476,7 +490,7 @@
                     otherDescArea.toggleClass('hidden-class smooth-toggle');
                     pendingBtnWrapper.toggleClass('hidden-class smooth-toggle');
                     caretIcon.toggleClass('rotated');
-                });
+                }
 
 
                 // Event delegation for dynamically added .toggler-btn
@@ -979,8 +993,22 @@
 
                 })
 
+                // View Assignment
+                $('.quick-updates-btn').on('click', function () {
+                    let btn = $(this);
+                    let card = btn.closest('.assign-card')
+                    let isExpanded = card.find('.other-desc-area').hasClass('smooth-toggle');;
 
-
+                    if (isExpanded) {
+                        let url = card.attr('data-url');
+                        if (url) {
+                            console.log('Redirecting to:', url);
+                            window.location.href = url;
+                        } else {
+                            console.error('No data-url found for card:', card.attr('id'));
+                        }
+                    }
+                });
 
             })
         </script>

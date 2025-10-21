@@ -43,7 +43,7 @@ Route::middleware(['prevent-back-history', 'CheckAgent'])->group(function () {
         Route::get('/ChangePhase/{id}', 'change_phase_view')->name('changephase');
         Route::post('assignment-status', 'updateStatus')->name('assign.status');
         Route::get('/Docs/{id}', 'docs_view')->name('docs');
-        Route::get('/View/{id}', 'view')->name('view');
+        Route::get('/View/{id}', 'view')->name('view')->middleware('checkOwner');
         Route::post('/assign-detail/post/{id}', 'assignDetail')->name('assign.detail');
         Route::post('assign/upload-docs/{id}', 'upload_docs')->name('upload.docs');
         Route::post('assign/update-docs/{id}', 'update_docs')->name('update.docs');
