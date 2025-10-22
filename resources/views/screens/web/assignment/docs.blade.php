@@ -21,7 +21,7 @@
                         <div class="search-left">
                             {{-- <button>Upload EMS</button> --}}
                             <button data-bs-toggle="modal" data-bs-target="#exampleModal3">+ Add Files</button>
-                            <button id="downloadAll" >Download All</button>
+                            <button id="downloadAll">Download All</button>
 
                             <button id="deleteSelected">Delete Selected</button>
                         </div>
@@ -29,8 +29,7 @@
                             <div class=" position-relative">
                                 <button class="head-search-icon" type="submit"><i
                                         class="fa-solid fa-magnifying-glass "></i></button>
-                                <input type="text" class="head-search-input" placeholder="Search Files" name=""
-                                    id="">
+                                <input type="text" class="head-search-input" placeholder="Search Files" name="" id="">
                             </div>
                         </div>
                     </div>
@@ -79,14 +78,14 @@
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </button>
                                                 <ul class="dropdown-menu" style="">
-                                                    <li class="drp-list"><button
-                                                            class="dropdown-item  download-file"
+                                                    <li class="drp-list"><button class="dropdown-item  download-file"
                                                             file-name="Table-image.png"><a
                                                                 href="{{ asset('assignment-docs/' . $document->file) }}"
                                                                 download class="drp-list"
                                                                 style="text-decoration: none; color:#000;width:100%">
                                                                 Download </a></button>
-                                                                <li><button class="dropdown-item edit-btn" data-id="{{ $document->id }}">Edit</button></li>
+                                                    <li><button class="dropdown-item edit-btn"
+                                                            data-id="{{ $document->id }}">Edit</button></li>
                                                     </li>
                                                     <li class="drp-list"><button class="dropdown-item delete-btn"
                                                             data-id="{{ $document->id }}">Delete</button></li>
@@ -143,303 +142,328 @@
 @endsection
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 
-    @push('scripts')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+@push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $('.file-icon').each(function() {
-                    var fileType = $(this).data('type').toLowerCase();
-                    var iconSrc = '';
+    <script>
+        $(document).ready(function () {
+            $('.file-icon').each(function () {
+                var fileType = $(this).data('type').toLowerCase();
+                var iconSrc = '';
 
-                    if (fileType.includes('word') || fileType === 'doc' || fileType === 'docx') {
-                        iconSrc = '{{ asset('assets/web/images/word-2.webp') }}';
-                    } else if (fileType === 'pdf') {
-                        iconSrc = '{{ asset('assets/web/images/pdf-img.jpg') }}';
-                    } else if (fileType === 'jpg' || fileType === 'jpeg' || fileType === 'png' || fileType ===
-                        'gif' || fileType === 'jfif') {
-                        iconSrc = '{{ asset('assignment-docs') }}' + "/" + $(this).data('file');
-                    } else {
-                        iconSrc = '{{ asset('assets/web/images/no_image.png') }}';
-                    }
-                    $(this).attr('src', iconSrc);
-                });
+                if (fileType.includes('word') || fileType === 'doc' || fileType === 'docx') {
+                    iconSrc = '{{ asset('assets/web/images/word-2.webp') }}';
+                } else if (fileType === 'pdf') {
+                    iconSrc = '{{ asset('assets/web/images/pdf-img.jpg') }}';
+                } else if (fileType === 'jpg' || fileType === 'jpeg' || fileType === 'png' || fileType ===
+                    'gif' || fileType === 'jfif') {
+                    iconSrc = '{{ asset('assignment-docs') }}' + "/" + $(this).data('file');
+                } else {
+                    iconSrc = '{{ asset('assets/web/images/no_image.png') }}';
+                }
+                $(this).attr('src', iconSrc);
+            });
 
-                $('.delete-btn').on("click", function() {
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You want to delete file",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            var id = $(this).attr("data-id");
+            $('.delete-btn').on("click", function () {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You want to delete file",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var id = $(this).attr("data-id");
 
-                            $.LoadingOverlay("show");
-                            $.ajax({
-                                type: 'POST',
-                                url: '{{ route('docs.destroy') }}',
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    id: id,
-                                },
-                                success: function(response) {
-                                    console.log(response);
+                        $.LoadingOverlay("show");
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ route('docs.destroy', $assignment->id) }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                id: id,
+                            },
+                            success: function (response) {
+                                console.log(response);
 
-                                    $.LoadingOverlay("hide");
+                                $.LoadingOverlay("hide");
 
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: 'File Deleted Successfully',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                });
+                            },
+                            error: function (xhr, status, error) {
+                                $.LoadingOverlay("hide");
+
+                                if (xhr.status === 403) {
                                     Swal.fire({
-                                        icon: 'success',
-                                        title: 'Success',
-                                        text: 'File Deleted Successfully',
+                                        title: 'Info',
+                                        text: xhr.responseJSON.message,
+                                        icon: 'info',
                                         confirmButtonText: 'OK'
                                     }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            location.reload();
-                                        }
+                                        window.location.href = xhr.responseJSON.redirect;
                                     });
-                                },
-                                error: function(xhr, status, error) {
-                                    $.LoadingOverlay("hide");
-
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: 'An error occurred, please try again.',
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
-                                    });
+                                    return;
                                 }
-                            })
-                        }
-                    })
+
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'An error occurred, please try again.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        })
+                    }
                 })
-            });
-        </script>
+            })
+        });
+    </script>
 
-        <script>
-            $(document).ready(function() {
-                function initTableFeatures($table, $pagination) {
-                    var rowsPerPage = 10;
-                    var $rows = $table.find('tbody tr');
-                    var totalRows = $rows.length;
-                    var totalPages = Math.ceil(totalRows / rowsPerPage);
-                    var currentPage = 1;
-                    var $searchInput = $('.head-search-input');
-                    var noResultsMessage =
-                        '<tr class="no-results"><td colspan="7" style="text-align: center;">No results found</td></tr>';
+    <script>
+        $(document).ready(function () {
+            function initTableFeatures($table, $pagination) {
+                var rowsPerPage = 10;
+                var $rows = $table.find('tbody tr');
+                var totalRows = $rows.length;
+                var totalPages = Math.ceil(totalRows / rowsPerPage);
+                var currentPage = 1;
+                var $searchInput = $('.head-search-input');
+                var noResultsMessage =
+                    '<tr class="no-results"><td colspan="7" style="text-align: center;">No results found</td></tr>';
 
-                    function updateTable() {
-                        var searchValue = $searchInput.val().toLowerCase().trim();
-                        $rows.hide();
-                        $table.find('.no-results').remove();
+                function updateTable() {
+                    var searchValue = $searchInput.val().toLowerCase().trim();
+                    $rows.hide();
+                    $table.find('.no-results').remove();
 
-                        var filteredRows = $rows.filter(function() {
-                            var $row = $(this);
-                            for (var i = 0; i < $row.find('td').length; i++) {
-                                var cellText = $row.find('td').eq(i).text().toLowerCase();
-                                if (cellText.includes(searchValue)) {
-                                    return true;
-                                }
+                    var filteredRows = $rows.filter(function () {
+                        var $row = $(this);
+                        for (var i = 0; i < $row.find('td').length; i++) {
+                            var cellText = $row.find('td').eq(i).text().toLowerCase();
+                            if (cellText.includes(searchValue)) {
+                                return true;
                             }
-                            return false;
-                        });
-
-                        totalRows = filteredRows.length;
-                        totalPages = Math.ceil(totalRows / rowsPerPage);
-
-                        if (totalRows > 0) {
-                            $pagination.show();
-                            var start = (currentPage - 1) * rowsPerPage;
-                            var end = start + rowsPerPage;
-                            filteredRows.slice(start, end).show();
-                        } else {
-                            $table.find('tbody').append(noResultsMessage);
-                            $pagination.hide();
                         }
+                        return false;
+                    });
 
-                        updatePagination();
-                    }
-
-                    function updatePagination() {
-                        $pagination.find('.page').remove();
-                        for (var i = 1; i <= totalPages; i++) {
-                            var $pageButton = $('<button class="page">' + i + '</button>');
-                            if (i === currentPage) {
-                                $pageButton.addClass('active-page');
-                            }
-                            $pageButton.insertBefore($pagination.find('.next'));
-                        }
-
-                        $pagination.find('.prev').prop('disabled', currentPage === 1);
-                        $pagination.find('.next').prop('disabled', currentPage === totalPages);
-                    }
+                    totalRows = filteredRows.length;
+                    totalPages = Math.ceil(totalRows / rowsPerPage);
 
                     if (totalRows > 0) {
                         $pagination.show();
-                        updateTable();
+                        var start = (currentPage - 1) * rowsPerPage;
+                        var end = start + rowsPerPage;
+                        filteredRows.slice(start, end).show();
                     } else {
                         $table.find('tbody').append(noResultsMessage);
                         $pagination.hide();
                     }
 
-                    $pagination.on('click', '.page', function() {
-                        currentPage = parseInt($(this).text());
-                        updateTable();
-                    });
-
-                    $pagination.on('click', '.prev', function() {
-                        if (currentPage > 1) {
-                            currentPage--;
-                            updateTable();
-                        }
-                    });
-
-                    $pagination.on('click', '.next', function() {
-                        if (currentPage < totalPages) {
-                            currentPage++;
-                            updateTable();
-                        }
-                    });
-
-                    $searchInput.on('input', function() {
-                        currentPage = 1;
-                        updateTable();
-                    });
+                    updatePagination();
                 }
 
-                var $table = $('.assign-table-2');
-                var $pagination = $('.pagination');
-                if ($table.length && $pagination.length) {
-                    initTableFeatures($table, $pagination);
-                }
-            });
-        </script>
-
-        <script>
-            $(document).ready(function() {
-                $('#masterCheckbox').on('change', function() {
-                    $('.slaveCheckbox').prop('checked', this.checked);
-                });
-
-                $(document).on('change', '.slaveCheckbox', function() {
-                    var totalCheckboxes = $('.slaveCheckbox').length;
-                    var checkedCheckboxes = $('.slaveCheckbox:checked').length;
-                    $('#masterCheckbox').prop('checked', totalCheckboxes === checkedCheckboxes &&
-                        totalCheckboxes > 0);
-                });
-
-                $('#deleteSelected').on('click', function() {
-                    var selectedIds = [];
-                    $('.slaveCheckbox:checked').each(function() {
-                        selectedIds.push($(this).data('id'));
-                    });
-
-                    if (selectedIds.length === 0) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'No Selection',
-                            text: 'Please select at least one file to delete.',
-                            confirmButtonText: 'OK'
-                        });
-                        return;
+                function updatePagination() {
+                    $pagination.find('.page').remove();
+                    for (var i = 1; i <= totalPages; i++) {
+                        var $pageButton = $('<button class="page">' + i + '</button>');
+                        if (i === currentPage) {
+                            $pageButton.addClass('active-page');
+                        }
+                        $pageButton.insertBefore($pagination.find('.next'));
                     }
-                    console.log(selectedIds)
+
+                    $pagination.find('.prev').prop('disabled', currentPage === 1);
+                    $pagination.find('.next').prop('disabled', currentPage === totalPages);
+                }
+
+                if (totalRows > 0) {
+                    $pagination.show();
+                    updateTable();
+                } else {
+                    $table.find('tbody').append(noResultsMessage);
+                    $pagination.hide();
+                }
+
+                $pagination.on('click', '.page', function () {
+                    currentPage = parseInt($(this).text());
+                    updateTable();
+                });
+
+                $pagination.on('click', '.prev', function () {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        updateTable();
+                    }
+                });
+
+                $pagination.on('click', '.next', function () {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        updateTable();
+                    }
+                });
+
+                $searchInput.on('input', function () {
+                    currentPage = 1;
+                    updateTable();
+                });
+            }
+
+            var $table = $('.assign-table-2');
+            var $pagination = $('.pagination');
+            if ($table.length && $pagination.length) {
+                initTableFeatures($table, $pagination);
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#masterCheckbox').on('change', function () {
+                $('.slaveCheckbox').prop('checked', this.checked);
+            });
+
+            $(document).on('change', '.slaveCheckbox', function () {
+                var totalCheckboxes = $('.slaveCheckbox').length;
+                var checkedCheckboxes = $('.slaveCheckbox:checked').length;
+                $('#masterCheckbox').prop('checked', totalCheckboxes === checkedCheckboxes &&
+                    totalCheckboxes > 0);
+            });
+
+            $('#deleteSelected').on('click', function () {
+                var selectedIds = [];
+                $('.slaveCheckbox:checked').each(function () {
+                    selectedIds.push($(this).data('id'));
+                });
+
+                if (selectedIds.length === 0) {
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: `You want to delete ${selectedIds.length} selected file(s)?`,
                         icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete them!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.LoadingOverlay("show");
-                            $.ajax({
-                                type: 'POST',
-                                url: '{{ route('docs.destroy') }}',
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    ids: selectedIds
-                                },
-                                success: function(response) {
-                                    console.log(response);
-                                    $.LoadingOverlay("hide");
+                        title: 'No Selection',
+                        text: 'Please select at least one file to delete.',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+                console.log(selectedIds)
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: `You want to delete ${selectedIds.length} selected file(s)?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete them!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.LoadingOverlay("show");
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ route('docs.destroy', $assignment->id) }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                ids: selectedIds
+                            },
+                            success: function (response) {
+                                console.log(response);
+                                $.LoadingOverlay("hide");
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: 'Selected files deleted successfully!',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                });
+                            },
+                            error: function (xhr, status, error) {
+                                $.LoadingOverlay("hide");
+
+                                if (xhr.status === 403) {
                                     Swal.fire({
-                                        icon: 'success',
-                                        title: 'Success',
-                                        text: 'Selected files deleted successfully!',
+                                        title: 'Info',
+                                        text: xhr.responseJSON.message,
+                                        icon: 'info',
                                         confirmButtonText: 'OK'
                                     }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            location.reload();
-                                        }
+                                        window.location.href = xhr.responseJSON.redirect;
                                     });
-                                },
-                                error: function(xhr, status, error) {
-                                    $.LoadingOverlay("hide");
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: xhr.responseJSON?.message ||
-                                            'An error occurred while deleting files. Please try again.',
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
-                                    });
+                                    return;
                                 }
-                            });
-                        }
-                    });
-                });
-            });
 
-            $(document).ready(function() {
-                const downloadRoute = "{{ route('download.all.zip', $assignment->id) }}";
-
-                $('#downloadAll').on('click', function() {
-                    // Check if there are any documents in the table
-                    if ($('.table-row-2 tr').length === 0 || $('.table-row-2').find('.no-results').length > 0) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'No Documents Available',
-                            text: 'There are no documents available to download.',
-                            confirmButtonText: 'OK'
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: xhr.responseJSON?.message ||
+                                        'An error occurred while deleting files. Please try again.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
                         });
-                        return;
                     }
-
-                    Swal.fire({
-                        title: 'Download Confirmation',
-                        text: "Are you sure you want to download all assignment documents as a zip file?",
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Download!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // If the user clicks "Yes, Download!", redirect to the Laravel route
-                            window.location.href = downloadRoute;
-
-                            // Optional: Show a "download started" message immediately
-                            Swal.fire({
-                                title: 'Download Started!',
-                                text: 'Your zip file is being prepared and will start downloading shortly.',
-                                icon: 'success',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
-                        }
-                    });
                 });
             });
+        });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
+            const downloadRoute = "{{ route('download.all.zip', $assignment->id) }}";
+
+            $('#downloadAll').on('click', function () {
+                // Check if there are any documents in the table
+                if ($('.table-row-2 tr').length === 0 || $('.table-row-2').find('.no-results').length > 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No Documents Available',
+                        text: 'There are no documents available to download.',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Download Confirmation',
+                    text: "Are you sure you want to download all assignment documents as a zip file?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Download!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If the user clicks "Yes, Download!", redirect to the Laravel route
+                        window.location.href = downloadRoute;
+
+                        // Optional: Show a "download started" message immediately
+                        Swal.fire({
+                            title: 'Download Started!',
+                            text: 'Your zip file is being prepared and will start downloading shortly.',
+                            icon: 'success',
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
             const btnSave = document.querySelector(".save-upload");
             const tableBody = document.querySelector(".table-row-2");
             const dismissBtn = document.querySelector(".dismiss-modal");
@@ -501,10 +525,10 @@
 
             function renderPreview() {
                 previewContainer.innerHTML = `
-                    <div class="preview-item text-center">
-                        <img src="${currentImageSrc}" style="width:120px;border-radius:5px;display:block;margin:auto;">
-                    </div>
-                `;
+                                    <div class="preview-item text-center">
+                                        <img src="${currentImageSrc}" style="width:120px;border-radius:5px;display:block;margin:auto;">
+                                    </div>
+                                `;
             }
 
             // Function to convert server URL to data URL
@@ -545,16 +569,16 @@
                 const modal = document.createElement("div");
                 modal.classList.add("crop-modal");
                 modal.innerHTML = `
-                    <div class="crop-wrapper" style="position:fixed;top:0;left:0;width:100%;height:100%;
-                    background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;">
-                        <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;">
-                            <img id="crop-image" src="${currentImageSrc}" style="max-width:400px;max-height:400px;">
-                            <br>
-                            <button id="cropSave" class="btn btn-primary mt-2">Save</button>
-                            <button id="cropCancel" class="btn btn-secondary mt-2">Cancel</button>
-                        </div>
-                    </div>
-                `;
+                                    <div class="crop-wrapper" style="position:fixed;top:0;left:0;width:100%;height:100%;
+                                    background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;">
+                                        <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;">
+                                            <img id="crop-image" src="${currentImageSrc}" style="max-width:400px;max-height:400px;">
+                                            <br>
+                                            <button id="cropSave" class="btn btn-primary mt-2">Save</button>
+                                            <button id="cropCancel" class="btn btn-secondary mt-2">Cancel</button>
+                                        </div>
+                                    </div>
+                                `;
                 document.body.appendChild(modal);
 
                 const image = modal.querySelector("#crop-image");
@@ -596,22 +620,22 @@
                 const modal = document.createElement("div");
                 modal.classList.add("text-modal");
                 modal.innerHTML = `
-                    <div style="position:fixed;top:0;left:0;width:100%;height:100%;
-                    background:rgba(0,0,0,0.8);display:flex;align-items:center;
-                    justify-content:center;z-index:9999;">
-                        <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;max-width:500px;">
-                            <canvas id="textCanvas" width="400" height="400" style="border:1px solid #ccc;cursor:move;"></canvas><br>
-                            <input type="text" id="textInput" placeholder="Enter text" class="form-control mt-2">
-                            <div class="d-flex gap-2 mt-2">
-                                <input type="color" id="textColor" value="#000000" class="form-control" style="height: 38px;">
-                                <input type="number" id="textSize" value="24" min="10" max="100" class="form-control">
-                            </div>
-                            <button id="textAdd" class="btn btn-primary mt-3">Add Text</button>
-                            <button id="textSave" class="btn btn-success mt-3">Save</button>
-                            <button id="textCancel" class="btn btn-secondary mt-3">Cancel</button>
-                        </div>
-                    </div>
-                `;
+                                    <div style="position:fixed;top:0;left:0;width:100%;height:100%;
+                                    background:rgba(0,0,0,0.8);display:flex;align-items:center;
+                                    justify-content:center;z-index:9999;">
+                                        <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;max-width:500px;">
+                                            <canvas id="textCanvas" width="400" height="400" style="border:1px solid #ccc;cursor:move;"></canvas><br>
+                                            <input type="text" id="textInput" placeholder="Enter text" class="form-control mt-2">
+                                            <div class="d-flex gap-2 mt-2">
+                                                <input type="color" id="textColor" value="#000000" class="form-control" style="height: 38px;">
+                                                <input type="number" id="textSize" value="24" min="10" max="100" class="form-control">
+                                            </div>
+                                            <button id="textAdd" class="btn btn-primary mt-3">Add Text</button>
+                                            <button id="textSave" class="btn btn-success mt-3">Save</button>
+                                            <button id="textCancel" class="btn btn-secondary mt-3">Cancel</button>
+                                        </div>
+                                    </div>
+                                `;
                 document.body.appendChild(modal);
 
                 const canvas = modal.querySelector("#textCanvas");
@@ -717,17 +741,17 @@
                 const modal = document.createElement("div");
                 modal.classList.add("draw-modal");
                 modal.innerHTML = `
-                    <div style="position:fixed;top:0;left:0;width:100%;height:100%;
-                    background:rgba(0,0,0,0.8);display:flex;align-items:center;
-                    justify-content:center;z-index:9999;">
-                        <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;">
-                            <canvas id="drawCanvas" width="400" height="400" style="border:1px solid #ccc;cursor:crosshair;"></canvas><br>
-                            <input type="color" id="drawColor" value="#000000" class="form-control mb-2" style="height: 38px;">
-                            <button id="drawSave" class="btn btn-success mt-2">Save</button>
-                            <button id="drawCancel" class="btn btn-secondary mt-2">Cancel</button>
-                        </div>
-                    </div>
-                `;
+                                    <div style="position:fixed;top:0;left:0;width:100%;height:100%;
+                                    background:rgba(0,0,0,0.8);display:flex;align-items:center;
+                                    justify-content:center;z-index:9999;">
+                                        <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;">
+                                            <canvas id="drawCanvas" width="400" height="400" style="border:1px solid #ccc;cursor:crosshair;"></canvas><br>
+                                            <input type="color" id="drawColor" value="#000000" class="form-control mb-2" style="height: 38px;">
+                                            <button id="drawSave" class="btn btn-success mt-2">Save</button>
+                                            <button id="drawCancel" class="btn btn-secondary mt-2">Cancel</button>
+                                        </div>
+                                    </div>
+                                `;
                 document.body.appendChild(modal);
 
                 const canvas = modal.querySelector("#drawCanvas");
@@ -802,22 +826,22 @@
                     const editModal = document.createElement("div");
                     editModal.classList.add("edit-main-modal");
                     editModal.innerHTML = `
-                        <div style="position:fixed;top:0;left:0;width:100%;height:100%;
-                        background:rgba(0,0,0,0.8);display:flex;align-items:center;
-                        justify-content:center;z-index:10000;">
-                            <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;max-width:500px;">
-                                <h5>Edit Image</h5>
-                                <img src="${currentImageSrc}" id="editPreviewImg" style="max-width:300px;border-radius:10px;display:block;margin:10px auto;">
-                                <div class="d-flex justify-content-center gap-2 mt-3">
-                                    <button class="btn btn-primary" id="editCrop">Crop</button>
-                                    <button class="btn btn-warning" id="editText">Add Text</button>
-                                    <button class="btn btn-danger   " id="editDraw">Draw</button>
-                                    <button class="btn btn-success" id="editSave">Save</button>
-                                </div>
-                                <button class="btn btn-secondary mt-3" id="editClose">Close</button>
-                            </div>
-                        </div>
-                    `;
+                                        <div style="position:fixed;top:0;left:0;width:100%;height:100%;
+                                        background:rgba(0,0,0,0.8);display:flex;align-items:center;
+                                        justify-content:center;z-index:10000;">
+                                            <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;max-width:500px;">
+                                                <h5>Edit Image</h5>
+                                                <img src="${currentImageSrc}" id="editPreviewImg" style="max-width:300px;border-radius:10px;display:block;margin:10px auto;">
+                                                <div class="d-flex justify-content-center gap-2 mt-3">
+                                                    <button class="btn btn-primary" id="editCrop">Crop</button>
+                                                    <button class="btn btn-warning" id="editText">Add Text</button>
+                                                    <button class="btn btn-danger   " id="editDraw">Draw</button>
+                                                    <button class="btn btn-success" id="editSave">Save</button>
+                                                </div>
+                                                <button class="btn btn-secondary mt-3" id="editClose">Close</button>
+                                            </div>
+                                        </div>
+                                    `;
                     document.body.appendChild(editModal);
 
                     editModal.querySelector("#editCrop").addEventListener("click", () => {
@@ -868,11 +892,11 @@
 
                             $.ajax({
                                 type: 'POST',
-                                url: '{{ route('update.docs', ':id') }}'.replace(':id', editingDocumentId),
+                                url: "{{ route('update.docs', $assignment->id) }}",
                                 data: formData,
                                 processData: false,
                                 contentType: false,
-                                success: function(response) {
+                                success: function (response) {
                                     $.LoadingOverlay("hide");
                                     Swal.fire({
                                         icon: 'success',
@@ -891,8 +915,21 @@
                                         }
                                     });
                                 },
-                                error: function(xhr) {
+                                error: function (xhr) {
                                     $.LoadingOverlay('hide');
+
+                                    if (xhr.status === 403) {
+                                        Swal.fire({
+                                            title: 'Info',
+                                            text: xhr.responseJSON.message,
+                                            icon: 'info',
+                                            confirmButtonText: 'OK'
+                                        }).then((result) => {
+                                            window.location.href = xhr.responseJSON.redirect;
+                                        });
+                                        return;
+                                    }
+
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Error',
@@ -954,11 +991,11 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: '{{ route('upload.docs', $assignment->id) }}',
+                        url: "{{ route('upload.docs', $assignment->id) }}",
                         data: formData,
                         processData: false,
                         contentType: false,
-                        success: function(response) {
+                        success: function (response) {
                             $.LoadingOverlay("hide");
                             Swal.fire({
                                 icon: 'success',
@@ -974,8 +1011,21 @@
                                 }
                             });
                         },
-                        error: function(xhr) {
+                        error: function (xhr) {
                             $.LoadingOverlay('hide');
+
+                            if (xhr.status === 403) {
+                                Swal.fire({
+                                    title: 'Info',
+                                    text: xhr.responseJSON.message,
+                                    icon: 'info',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.href = xhr.responseJSON.redirect;
+                                });
+                                return;
+                            }
+
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
@@ -1011,12 +1061,12 @@
                                 $.LoadingOverlay("show");
                                 $.ajax({
                                     type: 'POST',
-                                    url: '{{ route('docs.destroy') }}',
+                                    url: "{{ route('docs.destroy', $assignment->id) }}",
                                     data: {
                                         _token: "{{ csrf_token() }}",
                                         id: btn.getAttribute("data-id")
                                     },
-                                    success: function(response) {
+                                    success: function (response) {
                                         $.LoadingOverlay("hide");
                                         Swal.fire({
                                             icon: 'success',
@@ -1029,8 +1079,21 @@
                                             }
                                         });
                                     },
-                                    error: function(xhr) {
+                                    error: function (xhr) {
                                         $.LoadingOverlay("hide");
+
+                                        if (xhr.status === 403) {
+                                            Swal.fire({
+                                                title: 'Info',
+                                                text: xhr.responseJSON.message,
+                                                icon: 'info',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                                window.location.href = xhr.responseJSON.redirect;
+                                            });
+                                            return;
+                                        }
+
                                         Swal.fire({
                                             icon: 'error',
                                             title: 'Error',
@@ -1077,5 +1140,5 @@
             downloadSingle();
             editRow();
         });
-        </script>
-    @endpush
+    </script>
+@endpush

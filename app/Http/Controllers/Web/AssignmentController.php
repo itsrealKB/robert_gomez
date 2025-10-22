@@ -21,7 +21,6 @@ class AssignmentController extends Controller
     {
         $assignment = Assignment::find($request->assignment);
 
-
         $assignment->update([
             'status' => $request->status,
         ]);
@@ -129,11 +128,9 @@ class AssignmentController extends Controller
             'message' => 'file Uploaded successfully.',
         ]);
     }
-    public function update_docs($id, DocsRequest $request)
+    public function update_docs(DocsRequest $request)
     {
-
-        $document = AssignmentDocument::find($id);
-        // dd($document);
+        $document = AssignmentDocument::find($request->document_id);
 
         if ($request->has('file')) {
 
@@ -149,8 +146,6 @@ class AssignmentController extends Controller
                 'file_type' => $extension
             ]);
         }
-
-
 
         return response()->json([
             'status' => 'true',

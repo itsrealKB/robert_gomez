@@ -145,7 +145,19 @@
                         }
                     },
                     error: function(xhr) {
-                          $.LoadingOverlay("hide");
+                        $.LoadingOverlay("hide");
+
+                        if(xhr.status === 403){
+                            Swal.fire({
+                                title: 'Info',
+                                text: xhr.responseJSON.message,
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                window.location.href = xhr.responseJSON.redirect;
+                            });
+                            return;
+                        }
 
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
@@ -164,7 +176,7 @@
 
                             form.prepend(
                                 '<div class="alert alert-danger">An error occurred. Please try again.</div>'
-                                );
+                            );
                         }
                     }
                 });

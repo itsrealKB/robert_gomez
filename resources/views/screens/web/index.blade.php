@@ -599,58 +599,6 @@
             setInterval(updateElapsedTime, 60000);
         });
     </script>
-
-    <script>
-        $(document).ready(function () {
-            // $('.completeBtn').on('click', function() {
-
-            //     console.log($(this).attr('data-id'));
-
-            //     var assignmnet = $(this);
-            //     Swal.fire({
-            //         title: "Are you sure?",
-            //         text: " Once assignment will be complete it will be hidden from here!",
-            //         icon: "warning",
-            //         showCancelButton: true,
-            //         confirmButtonColor: "#0d6efd",
-            //         cancelButtonColor: "#d33",
-            //         confirmButtonText: "Completed"
-            //     }).then((result) => {
-            //         if (result.isConfirmed) {
-
-
-            //             $.ajax({
-            //                 type: 'POST',
-            //                 url: '{{ route('assign.status') }}',
-            //                 data: {
-            //                     "_token": "{{ csrf_token() }}",
-            //                     "status": "completed",
-            //                     "assignment": $(this).attr('data-id')
-            //                 },
-            //                 success: function(response) {
-            //                     console.log(response);
-
-            //                     Swal.fire({
-            //                         title: "Completed",
-            //                         text: response.message,
-            //                         icon: "success"
-            //                     });
-
-            //                     assignmnet.closest('.assign-card').hide();
-            //                     // window.location.reload()
-            //                 }
-            //             })
-            //         }
-            //     });
-
-            //     // $.ajax({
-            //     //     type: 'GET',
-            //     //     url:''
-            //     // })
-
-            // })
-        });
-    </script>
     <script>
         $(document).ready(function () {
 

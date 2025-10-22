@@ -59,7 +59,8 @@ class AssignmentController extends Controller
 
         $assignment->update([
             'user_id' => $request->agent,
-            'status' => 'pending'
+            'payment_info' => null,
+            'status' => 'pending',
         ]);
 
         $assignment->assignment_logs()->create([

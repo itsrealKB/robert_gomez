@@ -47,14 +47,13 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('assign.status', ':id') }}'.replace(':id', assignmentId),
+                    url: "{{ route('assign.status', ':id') }}".replace(':id', assignmentId),
                     data: {
                         _token: "{{ csrf_token() }}",
                         status: status,
                         assignment: assignmentId
                     },
                     success: function(response) {
-
                         $.LoadingOverlay("hide");
 
                         Swal.fire({
@@ -64,9 +63,22 @@
                                 'Assignment status updated successfully!',
                             confirmButtonText: 'OK'
                         });
+
                     },
                     error: function(xhr) {
                         $.LoadingOverlay("hide");
+
+                        if(xhr.status === 403){
+                            Swal.fire({
+                                title: 'Info',
+                                text: xhr.responseJSON.message,
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                window.location.href = xhr.responseJSON.redirect;
+                            });
+                            return;
+                        }
 
                         Swal.fire({
                             icon: 'error',

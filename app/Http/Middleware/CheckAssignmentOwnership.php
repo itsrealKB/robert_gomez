@@ -20,15 +20,26 @@ class CheckAssignmentOwnership
         $id = $request->route('id');
         $assignment = Assignment::find($id);
 
-        if($assignment){
-            if ($assignment->user_id !== auth()->id()) {
-                return redirect()->back();
-            }
+        if (!$assignment) {
+            return $this->handleAjaxResponse($request, 'Assignment not found.', 404);
         }
-        else{
-            return redirect()->back();
+
+        if ($assignment->user_id != auth()->id()) {
+            return $this->handleAjaxResponse($request, 'This Assignment Is Assigned To Another Appraiser, Kindly Contact Admin For Further Details.', 403);
         }
 
         return $next($request);
+    }
+    protected function handleAjaxResponse(Request $request, $message, $status = 403)
+    {
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => false,
+                'message' => $message,
+                'redirect' => route('dashboard') // Optional: tell frontend to redirect
+            ], $status);
+        }
+
+        return redirect()->route('dashboard');
     }
 }

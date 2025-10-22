@@ -40,20 +40,28 @@
                                 <div class="info-desc d-flex">
                                     <div>
                                         <ul class="head-ul">
-                                            <li>Company: </li>
-                                            <li>Company #:</li>
-                                            <li> DL Number:</li>
-                                            <li>Claim Number:</li>
-                                            <li>Status:</li>
+                                            <li>Insurance : </li>
+                                            <li>Owner : </li>
+                                            <li>Owner Phone : </li>
+                                            <li>Owner Email : </li>
+                                            <li>Claim# : </li>
+                                            <li>Type Of Claim : </li>
+                                            <li>Loss Type : </li>
+                                            <li>Vehical Location : </li>
+                                            <li>Appointment : </li>
                                         </ul>
                                     </div>
                                     <div>
                                         <ul class="desc-ul">
-                                            <li>Lorem Ipsum</li>
-                                            <li>ABCD1234567890</li>
-                                            <li>1234566</li>
-                                            <li>1234566</li>
-                                            <li>Active</li>
+                                            <li>{{ $assignment->company }}</li>
+                                            <li>{{ $assignment->owner }}</li>
+                                            <li>{{ $assignment->owner_phone }}</li>
+                                            <li>{{ $assignment->owner_email }}</li>
+                                            <li>{{ $assignment->claim }}</li>
+                                            <li>{{ $assignment->claim_type }}</li>
+                                            <li>{{ $assignment->loss_type }}</li>
+                                            <li>{{ $assignment->vehicle_location }}</li>
+                                            <li>{{ $assignment->appointment_date }}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -131,56 +139,56 @@
                                     <div class="d-flex justify-content-center gap-3 align-items-center">
                                         <div>
                                             <ul class="head-ul">
-                                                <li class="mb-4">Appointment Date:</li>
-                                                <li class="mb-2">Time Open</li>
-                                                <li>Date Created</li>
+                                                <li class="mb-4 fw-bold" style="font-size:14px;">Appointment Date:</li>
+                                                <li class="mb-2 fw-bold" style="font-size:14px;">Time Open</li>
+                                                <li class="fw-bold" style="font-size:14px;">Date Created</li>
                                             </ul>
                                         </div>
                                         <div>
                                             <ul class="desc-ul">
-                                                <li class="mb-4">
+                                                <li class="mb-4 fw-bold" style="font-size:14px;">
                                                     {{ \Carbon\Carbon::parse($assignment->appointment_date)->format('m/d/Y g:i a') }}
                                                     {{-- <a href=""
                                                         class="text-danger text-decoration-none"
                                                         style="margin-left: 12px; font-weight:700;">Change</a> --}}
                                                 </li>
-                                                <li class="mb-2">
+                                                <li class="mb-2 fw-bold" style="font-size:14px;">
                                                     {{ \Carbon\Carbon::parse($assignment->created_at)->diffForHumans(now(), ['parts' => 3, 'short' => false, 'syntax' => \Carbon\Carbon::DIFF_ABSOLUTE]) }}
                                                     ago</li>
-                                                <li>{{ \Carbon\Carbon::parse($assignment->created_at)->setTimezone('America/Chicago')->format('m/d/Y g:i a \C\D\T') }}
+                                                <li class="fw-bold" style="font-size:14px;">{{ \Carbon\Carbon::parse($assignment->created_at)->setTimezone('America/Chicago')->format('m/d/Y g:i a \C\D\T') }}
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <table class="table text-center timeline-table">
-                                        @forelse ($assignment->assignment_logs as $log)
-                                            <tr>
-                                                <th scope="row">{{ $log->user->first_name }}</th>
-                                                <td>{{ $log->created_at }}</td>
-                                                <td>
-                                                    @if ($log->is_accept == 1)
-                                                        <button class="rejection-reason"
-                                                            style="background:none;border:none"
-                                                            data-id="{{ $log->id }}"
-                                                            data-rejection-reason="{{ $log->reason_rejection }}">Accepted
-                                                            <i class="fa-solid fa-eye"></i></button>
-                                                    @elseif($log->is_accept !== null && $log->is_accept == 0)
-                                                        <button class="rejection-reason"
-                                                            style="background:none;border:none"
-                                                            data-id="{{ $log->id }}"
-                                                            data-rejection-reason="{{ $log->reason_rejection }}">Rejected
-                                                            <i class="fa-solid fa-eye"></i></button>
-                                                    @elseif($log->is_accept == null && $log->user_id != $assignment->user_id)
-                                                            {{ 'Previously Assigned' }}
-                                                    @elseif($log->is_accept == null && $log->user_id == $assignment->user_id)
-                                                        {{ 'Assigned' }}
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @empty
-                                        @endforelse
-                                    </table>
-                                    @isset($assignment->payment_info)
+                                    <div class="table-responsive w-100" style="max-height: 300px">
+                                        <table class="table text-center timeline-table">
+                                            @forelse ($assignment->assignment_logs as $log)
+                                                <tr>
+                                                    <th scope="row">{{ $log->user->full_name }}</th>
+                                                    <td>{{ $log->created_at }}</td>
+                                                    <td>
+                                                        @if ($log->is_accept == 1)
+                                                            <button class="rejection-reason"
+                                                                style="background:none;border:none"
+                                                                data-id="{{ $log->id }}"
+                                                                data-rejection-reason="{{ $log->reason_rejection }}">Accepted
+                                                                <i class="fa-solid fa-eye"></i></button>
+                                                        @elseif($log->is_accept !== null && $log->is_accept == 0)
+                                                            <button class="rejection-reason"
+                                                                style="background:none;border:none"
+                                                                data-id="{{ $log->id }}"
+                                                                data-rejection-reason="{{ $log->reason_rejection }}">Rejected
+                                                                <i class="fa-solid fa-eye"></i></button>
+                                                        @elseif($log->is_accept == null)
+                                                            {{ 'Assigned' }}
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                            @endforelse
+                                        </table>
+                                    </div>
+                                    {{-- @isset($assignment->payment_info)
                                         <div class="pay-info d-flex justify-content-between w-100">
                                             <p>Pay Change Request</p>
                                             <button class="view-payment-info"
@@ -190,11 +198,10 @@
                                                 <i class="fa-solid fa-eye ms-1"></i>
                                             </button>
                                         </div>
-                                    @endisset
-
+                                    @endisset --}}
                                 </div>
                             </div>
-                            <div class="pay-instruction">
+                            {{-- <div class="pay-instruction">
                                 <h5>Instructions</h5>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
                                     has been the industry's standard dummy text ever since the 1500s, when an unknown
@@ -203,7 +210,7 @@
                                     remaining essentially unchanged. It was popularised in the 1960s with the release of
                                     Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
                                     publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="row">
@@ -1124,16 +1131,29 @@
                         paymentInfo: $('#payment_info').val()
                     },
                     success:function (response){
-                        // console.log(response)
-                            swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Payment request send Successfully.',
-                                showConfirmButton: false,
-                                timer: 1500,
-                            }).then(() => {
-                                window.location.reload();
+                        swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Payment request send Successfully.',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error : function(xhr){
+                        if(xhr.status === 403){
+                            Swal.fire({
+                                title: 'Info',
+                                text: xhr.responseJSON.message,
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                window.location.href = xhr.responseJSON.redirect;
                             });
+                            return;
+                        }
+
                     }
                 })
             })
@@ -1246,8 +1266,6 @@
 
                 const formElement = document.querySelector('#assignmentDetail');
                 var form = new FormData(formElement);
-                // form.append('_token', "{{ csrf_token() }}");
-                console.log(form)
 
                 $.ajax({
                     type: 'POST',
@@ -1256,8 +1274,6 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        console.log(response)
-
                         swal.fire({
                             icon: 'success',
                             title: 'Success',
@@ -1265,7 +1281,21 @@
                             showConfirmButton: false,
                             timer: 1500,
                         })
+                    },
+                    error : function(xhr){
+                        if(xhr.status === 403){
+                            Swal.fire({
+                                title: 'Info',
+                                text: xhr.responseJSON.message,
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                window.location.href = xhr.responseJSON.redirect;
+                            });
+                            return;
+                        }
                     }
+
                 })
             })
         })
@@ -1335,10 +1365,23 @@
                             }
                         });
                     },
-                    error : function(error)
+                    error : function(xhr)
                     {
-                        let errorMessage = error.responseJSON ? error.responseJSON.message : error.statusText;
                         $.LoadingOverlay('hide');
+
+                        if(xhr.status === 403){
+                            Swal.fire({
+                                title: 'Info',
+                                text: xhr.responseJSON.message,
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                window.location.href = xhr.responseJSON.redirect;
+                            });
+                            return;
+                        }
+
+                        let errorMessage = error.responseJSON ? error.responseJSON.message : error.statusText;
                         Swal.fire({
                             title: 'Error',
                             text: errorMessage,

@@ -36,22 +36,21 @@ Route::middleware(['prevent-back-history', 'CheckAgent'])->group(function () {
     Route::get('/assign-docs/{id}/download', [DownloadController::class, 'assignment_docs'])->name('assignment-docs.download')->withoutMiddleware(['auth', 'CheckAdmin', 'CheckAgent', 'prevent-back-history']);
     Route::get('/download-all/docs/{id}', [DownloadController::class, 'all_assignment_docs'])->name('download.all.zip')->withoutMiddleware(['auth', 'CheckAdmin', 'CheckAgent', 'prevent-back-history']);
 
-    Route::controller(AssignmentController::class)->group(function () {
+    Route::middleware('checkOwner')->controller(AssignmentController::class)->group(function () {
 
         Route::get('accept-reject/{id}', 'isAccept_view')->name('reject');
         Route::post('accept-reject/{id}', 'isAccept')->name('accept.reject');
         Route::get('/ChangePhase/{id}', 'change_phase_view')->name('changephase');
-        Route::post('assignment-status', 'updateStatus')->name('assign.status');
+        Route::post('assignment-status/{id}', 'updateStatus')->name('assign.status');
         Route::get('/Docs/{id}', 'docs_view')->name('docs');
-        Route::get('/View/{id}', 'view')->name('view')->middleware('checkOwner');
+        Route::get('/View/{id}', 'view')->name('view');
         Route::post('/assign-detail/post/{id}', 'assignDetail')->name('assign.detail');
         Route::post('assign/upload-docs/{id}', 'upload_docs')->name('upload.docs');
         Route::post('assign/update-docs/{id}', 'update_docs')->name('update.docs');
         Route::post('assign/payment-info/{id}', 'paymentInfo')->name('payment.info');
 
-        Route::post('destroy', 'destroy')->name('docs.destroy');
+        Route::post('destroy/{id}', 'destroy')->name('docs.destroy');
     });
-
 
     Route::get('/ReOpen', function () {
         return view('screens.web.reOpen');
