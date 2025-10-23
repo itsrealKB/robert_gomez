@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AccountingController extends Controller
 {
@@ -47,57 +48,61 @@ class AccountingController extends Controller
                 ->get()
                 ->sum('assignment_payments_sum_price');
 
-            if ($pendingTotal == 0 && $rejectedTotal == 0) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Accounting Reports Not Found!",
-                ], 404);
-            } else {
+            // Pending & Rejected Assignments
+            $assignments = Assignment::whereDate('created_at', '>=', $request->start_date)
+                ->whereDate('created_at', '<=', $request->end_date)
+                ->where(function ($query) use ($user) {
+                    // Pending assignments: currently assigned to user with pending status
+                    $query->where(function ($q) use ($user) {
+                        $q->where('status', 'pending')
+                            ->where('user_id', $user->id);
+                    })
+                        // Rejected assignments: were rejected by user but NOT currently assigned to them
+                        ->orWhereHas('assignment_logs', function ($q) use ($user) {
+                        $q->where('is_accept', 0)
+                            ->where('user_id', $user->id)
+                            // Exclude assignments that are currently pending for this user (reassigned)
+                            ->whereNotExists(function ($subquery) use ($user) {
+                                $subquery->select(DB::raw(1))
+                                    ->from('assignments as a2')
+                                    ->whereColumn('a2.id', 'assignments.id')
+                                    ->where('a2.status', 'pending')
+                                    ->where('a2.user_id', $user->id);
+                            });
+                    });
+                })
+                ->with('assignment_payments')
+                ->distinct()
+                ->get()
+                ->map(function ($assignment) use ($user) {
+                    // Determine status based on current assignment state
+                    if ($assignment->status == 'pending' && $assignment->user_id == $user->id) {
+                        $assignment->status = 'pending';
+                    } else {
+                        $assignment->status = 'rejected';
+                    }
+                    return $assignment;
+                });
 
-                // Pending & Rejected Assignments
-                // $assignments = Assignment::whereDate('created_at', '>=', $request->start_date)
-                //     ->whereDate('created_at', '<=', $request->end_date)
-                //     ->where(function ($query) use ($user) {
-                //         $query->where(function ($q) use ($user) {
-                //             $q->where('status','pending')
-                //                 ->where('user_id', $user->id);
-                //         })->orWhereHas('assignment_logs', function ($q) use ($user) {
-                //             $q->where('is_accept', 0)
-                //                 ->where('user_id', $user->id);
-                //         });
-                //     })
-                //     ->with('assignment_payments')
-                //     ->distinct()
-                //     ->get()
-                //     ->map(function ($assignment) use ($user) {
-                //         // Determine status for each assignment
-                //         $isRejected = $assignment->assignment_logs
-                //             ->where('user_id', $user->id)
-                //             ->where('is_accept', 0)
-                //             ->isNotEmpty();
+            $results = [
+                'pending' => $pendingTotal,
+                'rejected' => $rejectedTotal,
+                'assignments' => $assignments,
+            ];
 
-                //         $assignment->status = $isRejected ? 'rejected' : 'pending';
-                //         return $assignment;
-                //     });
+            return response()->json([
+                'status' => true,
+                'message' => "Accounting Reports Found!",
+                'data' => $results,
+            ], 200);
 
-                // dd($assignments);
-
-                $results = [
-                    'pending' => $pendingTotal,
-                    'rejected' => $rejectedTotal,
-                ];
-
-                return response()->json([
-                    'status' => true,
-                    'message' => "Accounting Reports Found!",
-                    'data' => $results,
-                ], 200);
-            }
         } catch (\Exception $e) {
+
             return response()->json([
                 'status' => false,
                 'message' => $e,
             ], 404);
+
         }
 
     }

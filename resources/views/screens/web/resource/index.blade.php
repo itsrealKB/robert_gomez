@@ -11,122 +11,37 @@
             font-size: 14px;
         }
 
-        .page, .prev, .next {
+        .page,
+        .prev,
+        .next {
             background-color: #0366d3 !important;
             color: var(--white) !important;
         }
     </style>
 @endpush
 @section('content')
-    @php
-        // $docs = [
-        //     [
-        //         'title' => 'Knowledgebase.docx',
-        //         'label' => 'IAS KNOWLEDGE BASE',
-        //         'date' => '04/09/2024',
-        //         'img' => 'doc-card-img.png',
-        //     ],
-        //     [
-        //         'title' => 'Knowledgebase.docx',
-        //         'label' => 'IAS KNOWLEDGE BASE',
-        //         'date' => '04/09/2024',
-        //         'img' => 'doc-card-img.png',
-        //     ],
-        //     [
-        //         'title' => 'Knowledgebase.docx',
-        //         'label' => 'IAS KNOWLEDGE BASE',
-        //         'date' => '04/09/2024',
-        //         'img' => 'doc-card-img.png',
-        //     ],
-        //     [
-        //         'title' => 'Knowledgebase.docx',
-        //         'label' => 'IAS KNOWLEDGE BASE',
-        //         'date' => '04/09/2024',
-        //         'img' => 'doc-card-img.png',
-        //     ],
-        //     [
-        //         'title' => 'Knowledgebase.docx',
-        //         'label' => 'IAS KNOWLEDGE BASE',
-        //         'date' => '04/09/2024',
-        //         'img' => 'doc-card-img.png',
-        //     ],
-        // ];
-
-        $videos = [
-            [
-                'title' => 'Knowledgebase.docx',
-                'label' => 'IAS KNOWLEDGE BASE',
-                'date' => '04/09/2024',
-                'img' => 'video-card-img.png',
-            ],
-            [
-                'title' => 'Knowledgebase.docx',
-                'label' => 'IAS KNOWLEDGE BASE',
-                'date' => '04/09/2024',
-                'img' => 'video-card-img.png',
-            ],
-            [
-                'title' => 'Knowledgebase.docx',
-                'label' => 'IAS KNOWLEDGE BASE',
-                'date' => '04/09/2024',
-                'img' => 'video-card-img.png',
-            ],
-            [
-                'title' => 'Knowledgebase.docx',
-                'label' => 'IAS KNOWLEDGE BASE',
-                'date' => '04/09/2024',
-                'img' => 'video-card-img.png',
-            ],
-            [
-                'title' => 'Knowledgebase.docx',
-                'label' => 'IAS KNOWLEDGE BASE',
-                'date' => '04/09/2024',
-                'img' => 'video-card-img.png',
-            ],
-        ];
-
-        // $headers = ['Entries', 'Label', 'Date', 'Created by'];
-        // $entries = [
-        //     [
-        //         'name' => '1_IAS_Knowledgebase.docx',
-        //         'label' => 'IAS KNOWLEDGE BASE',
-        //         'date' => '04/09/2024',
-        //         'created_by' => 'Lorem Ipsum Dummy',
-        //     ],
-        //     [
-        //         'name' => '2_IAS_Knowledgebase.docx',
-        //         'label' => 'IAS KNOWLEDGE BASE',
-        //         'date' => '05/09/2024',
-        //         'created_by' => 'John Doe',
-        //     ],
-        //     [
-        //         'name' => '3_IAS_Knowledgebase.docx',
-        //         'label' => 'IAS KNOWLEDGE BASE',
-        //         'date' => '06/09/2024',
-        //         'created_by' => 'Jane Smith',
-        //     ],
-        // ];
-    @endphp
     <section>
         <div class="container-fluid">
             <div class="dashboard-content">
                 <div class="content-wrap">
                     <h2>Useful Resources</h2>
-                    <p>View your list of active resources below.</p>
+                    {{-- <p>View your list of active resources below.</p> --}}
                 </div>
-                {{-- <div class="files-wrapper">
+                <div class="files-wrapper">
                     <h3>Documents</h3>
                     <div>
                         <button class="doc-prev-btn"><i class="fa-solid fa-angle-left"></i></button>
                         <button class="doc-next-btn"><i class="fa-solid fa-angle-right"></i></button>
                     </div>
                 </div>
+
                 <div class="doc-card-slider">
                     @foreach ($docs as $doc)
-                    <x-document-card :doc="$doc" />
+                        <x-document-card :doc="$doc" />
                     @endforeach
-                </div> --}}
-                <div class="bg-primary video-card-wrap">
+                </div>
+
+                {{-- <div class="bg-primary video-card-wrap">
                     <div class="files-wrapper">
                         <h3 class="text-white">Videos</h3>
                         <div>
@@ -139,7 +54,7 @@
                             <x-video-card :video="$video" />
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- Client Forms --}}
                 <div>

@@ -1,13 +1,18 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AssignmentController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AccountingController;
 use Illuminate\Support\Facades\Route;
 
 
+
 Route::get('/', [HomeController::class, 'index'])->name('index');
+// Route::get('/cms', [AdminCmsController::class, 'index'])->name('cms');
+Route::get('/accounting', [AccountingController::class, 'index'])->name('accounting');
+Route::post('/accounting', [AccountingController::class, 'show'])->name('accounting.show');
 
 Route::prefix('assignments')->controller(AssignmentController::class)->name('assign.')->group(function () {
     Route::get('/', 'index')->name('index');

@@ -1,5 +1,6 @@
-@extends('layouts.web.app')
+@extends('layouts.admin.app')
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/web/css/style.css') }}">
     <style>
         .report-box:first-child {
             background-color: #e3f2fd !important;
@@ -14,7 +15,8 @@
         }
 
         .report-box:last-child {
-            background-color: #fde3d7 !important;
+            /* background-color: #fde3d7 !important; */
+            background-color: #fffcdf !important;
         }
 
         .load-btn {
@@ -28,6 +30,7 @@
             font-size: 13px;
             margin-top: 10px;
         }
+
         .dataTables_wrapper .dataTables_length,
         .dataTables_wrapper .dataTables_filter {
             display: inline-flex;
@@ -42,96 +45,99 @@
     </style>
 @endpush
 @section('content')
-    @php
-        $headers = ['S.No#', 'Company', 'Owner', 'Claim', 'Payments'];
-    @endphp
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="dashboard-content">
+                    @php
+                        $headers = ['S.No#', 'Company', 'Owner', 'Claim', 'Payments'];
+                    @endphp
 
-    <section>
-        <div class="container-fluid">
-            <div class="dashboard-content">
-                <div class="content-wrap">
-                    <h2>Payroll</h2>
-                </div>
-                <form id="payroll-form">
-                    @csrf
-                    <div class="date-content-wrap">
-                        <div class="date-wrap">
-                            <p>Date Range</p>
-                            <div>
-                                <input type="date" name="start_date" id="start-date" />
-                            </div>
-                            <div>
-                                <input type="date" name="end_date" id="end-date" />
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center gap-3">
-                            <button class="load-btn w-50" id="find-payroll">Submit</button>
-                            {{-- <button class="load-btn" type="button" id="download-csv">Download CSV</button> --}}
-                        </div>
+                    <div class="content-wrap">
+                        <h2>Payroll</h2>
                     </div>
-                </form>
+                    <form id="payroll-form">
+                        @csrf
+                        <div class="date-content-wrap">
+                            <div class="date-wrap">
+                                <p>Date Range</p>
+                                <div>
+                                    <input type="date" name="start_date" id="start-date" />
+                                </div>
+                                <div>
+                                    <input type="date" name="end_date" id="end-date" />
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center gap-3">
+                                <button class="load-btn w-50" id="find-payroll">Submit</button>
+                                {{-- <button class="load-btn" type="button" id="download-csv">Download
+                                    CSV</button> --}}
+                            </div>
+                        </div>
+                    </form>
 
-                <div class="report-wrapper">
-                    <div class="files-wrapper">
-                        <h3>Reporting</h3>
-                    </div>
-                    <div class="report-box-wrapper">
-                        <div class="report-box">
-                            <h3>Total Assignments</h3>
-                            <h2 id="total">$0</h2>
-                            {{-- <p><i class="fa-solid fa-arrow-down"></i> 13.8%</p> --}}
-                        </div>
-                        {{-- <div class="report-box">
-                            <h3>Accepted Assignments</h3>
-                            <h2>$0</h2>
-                            <p><i class="fa-solid fa-arrow-down"></i> 13.8%</p>
-                        </div> --}}
-                        <div class="report-box">
-                            <h3>Pending Assignments</h3>
-                            <h2 id="pending">$0</h2>
-                            {{-- <p><i class="fa-solid fa-arrow-up" style="color: green;"></i> 13.8%</p> --}}
-                        </div>
-                        <div class="report-box">
-                            <h3>Rejected Assignments</h3>
-                            <h2 id="rejected">$0</h2>
-                            {{-- <p><i class="fa-solid fa-arrow-down"></i> 13.8%</p> --}}
-                        </div>
-                    </div>
-                    <div>
+                    <div class="report-wrapper">
                         <div class="files-wrapper">
-                            <h3>Assignments</h3>
+                            <h3>Reporting</h3>
                         </div>
-                        <div class="entry-table-wrap">
-                            <table class="table entries-table" id="assignments-table">
-                                <thead>
-                                    <tr>
-                                        @foreach ($headers as $heading)
-                                            <th scope="col" style="background: #8E8E8E !important; color: white !important;">
-                                                {{ $heading }}
-                                                <i class="fa-solid fa-arrow-down"></i>
-                                            </th>
-                                        @endforeach
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="{{ count($headers) }}" class="text-center fw-bold fs-5">No Data Of
-                                            Assignments!</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="report-box-wrapper">
+                            <div class="report-box">
+                                <h3>Total Assignments</h3>
+                                <h2 id="total">$0</h2>
+                                {{-- <p><i class="fa-solid fa-arrow-down"></i> 13.8%</p> --}}
+                            </div>
+                            {{-- <div class="report-box">
+                                <h3>Accepted Assignments</h3>
+                                <h2>$0</h2>
+                                <p><i class="fa-solid fa-arrow-down"></i> 13.8%</p>
+                            </div> --}}
+                            <div class="report-box">
+                                <h3>UnAssigned Assignments</h3>
+                                <h2 id="unassigned">$0</h2>
+                                {{-- <p><i class="fa-solid fa-arrow-up" style="color: green;"></i> 13.8%
+                                </p> --}}
+                            </div>
+                            <div class="report-box">
+                                <h3>Pending Assignments</h3>
+                                <h2 id="pending">$0</h2>
+                                {{-- <p><i class="fa-solid fa-arrow-down"></i> 13.8%</p> --}}
+                            </div>
                         </div>
-                        {{-- <div class="d-none justify-content-center" id="download-csv">
-                            <button class="load-btn">Download CSV</button>
-                        </div> --}}
+                        <div>
+                            <div class="files-wrapper">
+                                <h3>Assignments</h3>
+                            </div>
+                            <div class="entry-table-wrap">
+                                <table class="table entries-table" id="assignments-table">
+                                    <thead>
+                                        <tr>
+                                            @foreach ($headers as $heading)
+                                                <th scope="col"
+                                                    style="background: #8E8E8E !important; color: white !important;">
+                                                    {{ $heading }}
+                                                    <i class="fa-solid fa-arrow-down"></i>
+                                                </th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="{{ count($headers) }}" class="text-center fw-bold fs-5">No Data Of
+                                                Assignments!</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            {{-- <div class="d-none justify-content-center" id="download-csv">
+                                <button class="load-btn">Download CSV</button>
+                            </div> --}}
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </section>
+    </div>
 @endsection
-
 @push('scripts')
     {{-- DataTable --}}
     <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
@@ -195,7 +201,7 @@
                 const formData = new FormData(this);
 
                 $.ajax({
-                    url: "{{ route('accounting.show', auth()->id()) }}",
+                    url: "{{ route('admin.accounting.show') }}",
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -205,15 +211,15 @@
                     },
                     success: function (response) {
                         $.LoadingOverlay('hide');
-                        const { pending = 0, rejected = 0, assignments = [] } = response.data;
+                        const { pending = 0, unassigned = 0, assignments = [] } = response.data;
                         const amountContainers = $('.report-box h2');
 
                         // Showing Amount.
                         amountContainers.each((index, element) => {
                             const amounts = {
-                                'total': pending + rejected,
+                                'total': unassigned + pending,
                                 'pending': pending,
-                                'rejected': rejected
+                                'unassigned': unassigned
                             };
 
                             if (amounts[element.id] !== undefined) {
@@ -233,13 +239,14 @@
 
                         // Showing Assignments Table.
                         const tableBody = $('#assignments-table tbody');
-                        if(assignments.length){
+                        if (assignments.length) {
 
                             if ($.fn.DataTable.isDataTable('#assignments-table')) {
                                 $('#assignments-table').DataTable().destroy();
                             }
 
                             tableBody.empty();
+
                             assignments.forEach((assignment, index) => {
                                 // Getting Payment.
                                 let amount = 0;
@@ -271,7 +278,7 @@
 
                             $('#download-csv').removeClass('d-none').addClass('d-flex');
                         }
-                        else{
+                        else {
 
                             if ($.fn.DataTable.isDataTable('#assignments-table')) {
                                 $('#assignments-table').DataTable().destroy();

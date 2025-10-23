@@ -2,7 +2,7 @@
     'video' => $video ?? '',
 ])
 <div class="doc-card">
-    <a href="">
+    <a>
         <img src="{{ asset('assets/web/images/'.$video['img']) }}" alt="" class="img-fluid">
 
     </a>

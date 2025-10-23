@@ -218,16 +218,16 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="admin-CMS.html" class="nav-link d-flex align-items-center">
+                        {{-- <li class="nav-item">
+                            <a href="{{ route('admin.cms') }}" class="nav-link d-flex align-items-center">
                                 <i class="fa-solid fa-file-pen" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Admin CMS
                                 </p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
-                            <a href="#" class="nav-link d-flex align-items-center">
+                            <a href="{{ route('admin.accounting') }}" class="nav-link d-flex align-items-center">
                                 <i class="fa-solid fa-file-invoice-dollar" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Accounting

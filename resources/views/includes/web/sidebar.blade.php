@@ -24,8 +24,13 @@
                 <a class="menu-link" href="{{ route('profile.index') }}"><img
                         src="{{ asset('assets/web/images/link-img-4.png') }}" alt=""> Profile</a>
             </li>
+            <li class="menu-list">
+                <a class="menu-link" href="#"><img src="{{ asset('assets/web/images/link-img-6.png') }}"
+                        alt="">
+                    Settings</a>
+            </li>
         </div>
-        <div class="menu-lists-child-2">
+        {{-- <div class="menu-lists-child-2">
             <li class="menu-list">
                 <a class="menu-link" href="#"><img src="{{ asset('assets/web/images/link-img-5.png') }}"
                         alt="">
@@ -36,7 +41,7 @@
                         alt="">
                     Settings</a>
             </li>
-        </div>
+        </div> --}}
     </ul>
 </div>
 
