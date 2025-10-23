@@ -387,12 +387,6 @@ class AssignmentController extends Controller
 
     }
 
-    // Locatons
-    public function getZipCode($location)
-    {
-        dd(GeoCodeHelper::geocodeZipCode($location));
-    }
-
     public function searchAssign(Request $request)
     {
 

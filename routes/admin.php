@@ -31,9 +31,6 @@ Route::prefix('assignments')->controller(AssignmentController::class)->name('ass
     Route::get('assignment-payment/edit/{id}', 'assignmentPaymentEdit')->name('payment.edit');
     Route::post('assignment-payment/update/{id}', 'assignmentPaymentUpdate')->name('payment.update');
     Route::post('assignment-payment/destroy', 'assignmentPaymentDestroy')->name('payment.destroy');
-
-    // Locations
-    Route::get('location/{location}', 'getZipCode');
 });
 
 Route::prefix('users')->controller(UserController::class)->name('users.')->group(function () {

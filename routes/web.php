@@ -18,6 +18,7 @@ Route::middleware(['prevent-back-history', 'CheckAgent'])->group(function () {
     Route::get('search-assignment/{query}', [HomeController::class, 'searchAssignment'])->name('search.assignment');
 
     Route::get('/Accounting', [AccountingController::class, 'index'])->name('accounting');
+    Route::post('/Accounting/{id}', [AccountingController::class, 'showAccounting'])->name('accounting.show');
 
     Route::get('/Resources', [ResourcesController::class, 'index'])->name('resources');
 

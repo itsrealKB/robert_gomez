@@ -9,11 +9,12 @@ use App\Models\Assignment;
 use App\Models\AssignmentDocument;
 use App\Models\AssignmentLog;
 use App\Models\ClientForm;
-use Illuminate\Support\Str;
 use App\Models\GeneralForm;
 use App\Models\Guideline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class AssignmentController extends Controller
 {
@@ -131,26 +132,51 @@ class AssignmentController extends Controller
     public function update_docs(DocsRequest $request)
     {
         $document = AssignmentDocument::find($request->document_id);
+        $oldFileName = $document->file; // Old File Name
 
         if ($request->has('file')) {
 
-            $timestamp = time();
-            $randomString = Str::random(8);
-            $extension = $request->file->getClientOriginalExtension();
-            $fileName = "doc_{$timestamp}_{$randomString}.{$extension}";
+            try {
+                $timestamp = time();
+                $randomString = Str::random(8);
+                $extension = $request->file->getClientOriginalExtension();
+                $fileName = "doc_{$timestamp}_{$randomString}.{$extension}";
 
-            $request->file->move(public_path('assignment-docs/'), $fileName);
+                $request->file->move(public_path('assignment-docs/'), $fileName);
 
-            $document->update([
-                'file' => $fileName,
-                'file_type' => $extension
-            ]);
+                $document->update([
+                    'file' => $fileName,
+                    'file_type' => $extension
+                ]);
+
+                if ($oldFileName) {
+
+                    $oldFilePath = public_path('assignment-docs/' . $oldFileName);
+
+                    if (File::exists($oldFilePath)) {
+                        File::delete($oldFilePath);
+                    }
+                }
+
+                return response()->json([
+                    'status' => 'true',
+                    'message' => 'file Uploaded successfully.',
+                ]);
+
+            } catch (\Exception $e) {
+                // If Any Error While Uploading, Keep The Old File And Delete The New One.
+                if (isset($fileName) && File::exists(public_path('assignment-docs/' . $fileName))) {
+                    File::delete(public_path('assignment-docs/' . $fileName));
+                }
+
+                return response()->json([
+                    'status' => 'false',
+                    'message' => 'File update failed: ' . $e->getMessage(),
+                ], 500);
+            }
+
         }
 
-        return response()->json([
-            'status' => 'true',
-            'message' => 'file Uploaded successfully.',
-        ]);
     }
 
     public function destroy(Request $request)
@@ -158,6 +184,9 @@ class AssignmentController extends Controller
         try {
             $ids = $request->input('ids', [$request->input('id')]);
             $ids = array_filter($ids, fn($id) => !is_null($id));
+
+            // Getting File Names.
+            $files = AssignmentDocument::WhereIn('id', $ids)->get('file');
 
             if (empty($ids)) {
                 return response()->json([
@@ -170,17 +199,28 @@ class AssignmentController extends Controller
                 AssignmentDocument::whereIn('id', $ids)->delete();
             });
 
+            // Deleting Files From Folder.
+            foreach ($files as  $file) {
+                if ($file->file) {
+                    $oldFilePath = public_path('assignment-docs/' . $file->file);
+                    if (File::exists($oldFilePath)) {
+                        File::delete($oldFilePath);
+                    }
+                }
+            }
 
             return response()->json([
                 'status' => true,
                 'message' => count($ids) > 1 ? 'Documents deleted successfully.' : 'Document deleted successfully.'
             ]);
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => 'Failed to delete document(s). Please try again.'
             ], 500);
         }
+
     }
 
     public function assignDetail(Request $request, $id)
