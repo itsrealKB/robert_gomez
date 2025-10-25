@@ -1,4 +1,5 @@
 @extends('layouts.admin.app')
+
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/web/css/style.css') }}">
     <style>
@@ -44,6 +45,7 @@
         }
     </style>
 @endpush
+
 @section('content')
     <div class="content-wrapper">
         <div class="content">
@@ -54,7 +56,7 @@
                     @endphp
 
                     <div class="content-wrap">
-                        <h2>Payroll</h2>
+                        <h2>Accountings</h2>
                     </div>
                     <form id="payroll-form">
                         @csrf
@@ -69,9 +71,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center gap-3">
-                                <button class="load-btn w-50" id="find-payroll">Submit</button>
-                                {{-- <button class="load-btn" type="button" id="download-csv">Download
-                                    CSV</button> --}}
+                                <button class="load-btn" id="find-payroll">Submit</button>
+                                <button class="load-btn" type="button" id="download-csv" data-disabled="true">Download CSV</button>
                             </div>
                         </div>
                     </form>
@@ -138,6 +139,7 @@
         </div>
     </div>
 @endsection
+
 @push('scripts')
     {{-- DataTable --}}
     <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
@@ -276,7 +278,8 @@
                                 },
                             });
 
-                            $('#download-csv').removeClass('d-none').addClass('d-flex');
+                            // $('#download-csv').removeClass('d-none').addClass('d-flex');
+                            $('#download-csv').attr('data-disabled','false');
                         }
                         else {
 
@@ -293,12 +296,14 @@
                                     </tr>
                                 `;
                             tableBody.append(row);
-                            $('#download-csv').removeClass('d-flex').addClass('d-none');
+                            // $('#download-csv').removeClass('d-flex').addClass('d-none');
+                            $('#download-csv').attr('data-disabled','true');
                         }
 
                     },
                     error: function (error) {
                         $.LoadingOverlay('hide');
+                        $('#download-csv').attr('data-disabled','true');
                         if (error.status === 500) {
                             Swal.fire({
                                 title: "Error!",
@@ -323,4 +328,45 @@
         });
     </script>
     {{-- Submitting Form --}}
+
+    {{-- CSV Download --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '#download-csv', function () {
+                let disabled = $(this).attr('data-disabled');
+                if(disabled == 'true'){
+                    Swal.fire({
+                        title: "There's Information For You!",
+                        text: 'No Data In The Table!',
+                        icon: 'info',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+                let table = $('#assignments-table')[0];
+
+                // Clone table
+                let clone = table.cloneNode(true);
+
+                // Convert table to CSV
+                let worksheet = XLSX.utils.table_to_sheet(clone);
+                let csv = XLSX.utils.sheet_to_csv(worksheet);
+
+                // Create CSV blob and trigger download
+                let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                let link = $('<a>',
+                    {
+                        href : URL.createObjectURL(blob),
+                        download : 'accounts.csv'
+                    }
+                )
+                $('body').append(link);
+                link[0].click();
+                link.remove();
+            });
+        });
+    </script>
+    {{-- CSV Download --}}
 @endpush

@@ -234,14 +234,14 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link d-flex align-items-center">
                                 <i class="fa-solid fa-file-contract" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
                                     Reports
                                 </p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{ route('admin.settings.index') }}" class="nav-link d-flex align-items-center">
                                 <i class="fa-solid fa-gear" style="font-size: 22px; margin-right: 10px;"></i>
@@ -250,7 +250,7 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link d-flex align-items-center">
                                 <i class="fa-solid fa-link" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
@@ -265,7 +265,7 @@
                                     Forms
                                 </p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{ route('admin.logout') }}" class="nav-link d-flex align-items-center">
                                 <i class="fa-solid fa-right-from-bracket" style="font-size: 22px; margin-right: 10px;"></i>

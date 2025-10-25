@@ -9,86 +9,118 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Dashboard v2</h1>
-          </div><!-- /.col -->
+          </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Dashboard v2</li>
             </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- /.content-header -->
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Info boxes -->
+
+        <!-- Assignment Count Boxes -->
         <div class="row">
+          <div class="col-12 mb-1">
+            <h3>Assignment Count</h3>
+          </div>
+
           <div class="col-12 col-lg-3 col-md-3 col-sm-6">
             <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-
+              <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-file-lines"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">CPU Traffic</span>
-                <span class="info-box-number">
-                  10
-                  <small>%</small>
-                </span>
+                <span class="info-box-text">Total Assignments</span>
+                <span class="info-box-number">{{ $assignedCount + $unassignedCount }}</span>
               </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
           </div>
-          <!-- /.col -->
-          <div class="col-12 col-lg-3 col-md-3 col-sm-6">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Likes</span>
-                <span class="info-box-number">41,410</span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-
-          <!-- fix for small devices only -->
-          <!-- <div class="clearfix hidden-md-up"></div> -->
 
           <div class="col-12 col-lg-3 col-md-3 col-sm-6">
             <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-
+              <span class="info-box-icon bg-danger elevation-1"><i class="fa-solid fa-file-lines"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">Sales</span>
-                <span class="info-box-number">760</span>
+                <span class="info-box-text">Assigned Assignments</span>
+                <span class="info-box-number">{{ $assignedCount }}</span>
               </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
           </div>
-          <!-- /.col -->
+
           <div class="col-12 col-lg-3 col-md-3 col-sm-6">
             <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
+              <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-file-lines"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">New Members</span>
-                <span class="info-box-number">2,000</span>
+                <span class="info-box-text">Un-Assigned Assignments</span>
+                <span class="info-box-number">{{ $unassignedCount }}</span>
               </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
           </div>
-          <!-- /.col -->
+
+          <div class="col-12 col-lg-3 col-md-3 col-sm-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-file-lines"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Completed Assignments</span>
+                <span class="info-box-number">{{ $completedCount }}</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- /.row -->
+        <!-- Assignment Count Boxes -->
 
-        <div class="row">
+        <!-- Assignment Amount Boxes -->
+        <div class="row mt-4">
+          <div class="col-12 mb-1">
+            <h3>Assignment Amount</h3>
+          </div>
+
+          <div class="col-12 col-lg-3 col-md-3 col-sm-6">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-dollar-sign"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Total Assignments Amount</span>
+                <span class="info-box-number">@moneyFormat($assignedAmount + $unassignedAmount)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-3 col-md-3 col-sm-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fa-solid fa-dollar-sign"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Assigned Assignments Amount</span>
+                <span class="info-box-number">@moneyFormat($assignedAmount)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-3 col-md-3 col-sm-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-dollar-sign"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Un-Assigned Assignments Amount</span>
+                <span class="info-box-number">@moneyFormat($unassignedAmount)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-3 col-md-3 col-sm-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-dollar-sign"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Completed Assignments Amount</span>
+                <span class="info-box-number">@moneyFormat($completedAmount)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Assignment Amount Boxes -->
+
+        {{-- <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -221,11 +253,11 @@
             <!-- /.card -->
           </div>
           <!-- /.col -->
-        </div>
+        </div> --}}
         <!-- /.row -->
 
         <!-- Main row -->
-        <div class="row">
+        {{-- <div class="row">
           <!-- Left col -->
           <div class="col-md-8">
             <!-- MAP & BOX PANE -->
@@ -851,7 +883,7 @@
             <!-- /.card -->
           </div>
           <!-- /.col -->
-        </div>
+        </div> --}}
         <!-- /.row -->
       </div><!--/. container-fluid -->
     </section>
