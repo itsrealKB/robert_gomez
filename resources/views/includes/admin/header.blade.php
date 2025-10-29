@@ -234,14 +234,14 @@
                                 </p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="#" class="nav-link d-flex align-items-center">
-                                <i class="fa-solid fa-file-contract" style="font-size: 22px; margin-right: 10px;"></i>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.feedbacks') }}" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-comment-dots" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>
-                                    Reports
+                                    Feedbacks
                                 </p>
                             </a>
-                        </li> --}}
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.settings.index') }}" class="nav-link d-flex align-items-center">
                                 <i class="fa-solid fa-gear" style="font-size: 22px; margin-right: 10px;"></i>

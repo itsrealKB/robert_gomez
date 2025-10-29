@@ -3,13 +3,20 @@
 
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\WebAuthController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Web\AccountingController;
 use App\Http\Controllers\Web\AssignmentController;
 use App\Http\Controllers\Web\DownloadController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\ResourcesController;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
+
+require __DIR__.'/channels.php';
+
+
+Broadcast::routes(['middleware' => ['auth']]);
 
 
 Route::middleware(['prevent-back-history', 'CheckAgent'])->group(function () {
@@ -154,10 +161,12 @@ Route::middleware('guest')->group(function () {
     Route::post('admin/login', [AdminAuthController::class, 'login']);
 });
 
+Route::controller(FeedbackController::class)->group(function(){
+    Route::get('/feedback/create', 'create')->name('feedback.create');
+    Route::post('/feedback', 'store')->name('feedback.store');
+});
 
 Route::get('admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout')->middleware('auth');
-
-
 
 Route::get('/forgetPassword', function () {
     return view('auth.web.forgetPassword');

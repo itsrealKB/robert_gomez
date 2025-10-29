@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Events\NotificationCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Assignment\DocsRequest;
 use App\Http\Requests\Web\Assignment\RejectRequest;
@@ -11,6 +12,8 @@ use App\Models\AssignmentLog;
 use App\Models\ClientForm;
 use App\Models\GeneralForm;
 use App\Models\Guideline;
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -260,6 +263,17 @@ class AssignmentController extends Controller
         $assignment->update([
             'payment_info' => $request->paymentInfo
         ]);
+
+        $admin = User::where('role','admin')->first();
+
+        $notification = Notification::create([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $admin->id,
+            'assignment_id' => $assignment->id,
+            'type' => 'payment-request',
+        ]);
+
+        broadcast(new NotificationCreated($notification));
 
         return response()->json([
             'status' => 'true',

@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountingController;
 use App\Http\Controllers\Admin\AssignmentController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AccountingController;
+use App\Http\Controllers\FeedbackController;
 use Illuminate\Support\Facades\Route;
-
 
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -68,3 +68,5 @@ Route::prefix('settings')->controller(SettingsController::class)->name('settings
     Route::get('guidelines', 'guidelines')->name('guidelines');
     Route::post('guidelines-store', 'guidelinesStore')->name('guidelines.store');
 });
+
+Route::get('/feedbacks' ,[ FeedbackController::class,'index'])->name('feedbacks');

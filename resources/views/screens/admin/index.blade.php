@@ -1,4 +1,5 @@
 @extends('layouts.admin.app')
+
 @section('content')
 
   <!-- Content Wrapper. Contains page content -->
@@ -890,5 +891,4 @@
     <!-- /.content -->
   </div>
 
-  @endsection
-  <!-- /.content-wrapper -->
+@endsection

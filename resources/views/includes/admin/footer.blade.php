@@ -20,7 +20,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{{-- <script src="{{ asset("assets/admin/plugins/jquery/jquery.js") }}"></script> --}}
+{{--
+<script src="{{ asset(" assets/admin/plugins/jquery/jquery.js") }}"></script> --}}
 <!-- Bootstrap -->
 <script src="{{ asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- overlayScrollbars -->
@@ -39,12 +40,13 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/admin/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    {{-- <script src="{{ asset('assets/admin/js/pages/dashboard2.js') }}"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-
+{{--
+<script src="{{ asset('assets/admin/js/pages/dashboard2.js') }}"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 @stack('scripts')
-
- <!-- REQUIRED SCRIPTS -->
+<!-- REQUIRED SCRIPTS -->
 </body>
+
 </html>
