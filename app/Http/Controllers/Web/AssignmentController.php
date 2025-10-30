@@ -29,6 +29,18 @@ class AssignmentController extends Controller
             'status' => $request->status,
         ]);
 
+        $type = $request->status == 'pending' ? 'assignment-pending' : 'assignment-completed';
+
+        $admin = User::where('role','admin')->first();
+
+        $notification = Notification::create([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $admin->id,
+            'assignment_id' => $assignment->id,
+            'type' => $type,
+        ]);
+
+        broadcast(new NotificationCreated($notification));
 
         return response()->json([
             'status' => 'true',
@@ -79,6 +91,19 @@ class AssignmentController extends Controller
             'user_id' => $user,
             'status' => 'pending'
         ]);
+
+        $type = $request->accept == 0 ? 'assignment-rejected' : 'assignment-accepted';
+
+        $admin = User::where('role','admin')->first();
+
+        $notification = Notification::create([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $admin->id,
+            'assignment_id' => $assignment->id,
+            'type' => $type,
+        ]);
+
+        broadcast(new NotificationCreated($notification));
 
         return response()->json([
             'status' => 'true',

@@ -83,7 +83,7 @@
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-dollar-sign"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">Total Assignments Amount</span>
+                <span class="info-box-text">Total Assignments</span>
                 <span class="info-box-number">@moneyFormat($assignedAmount + $unassignedAmount)</span>
               </div>
             </div>
@@ -93,7 +93,7 @@
             <div class="info-box mb-3">
               <span class="info-box-icon bg-danger elevation-1"><i class="fa-solid fa-dollar-sign"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">Assigned Assignments Amount</span>
+                <span class="info-box-text">Assigned Assignments</span>
                 <span class="info-box-number">@moneyFormat($assignedAmount)</span>
               </div>
             </div>
@@ -103,7 +103,7 @@
             <div class="info-box mb-3">
               <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-dollar-sign"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">Un-Assigned Assignments Amount</span>
+                <span class="info-box-text">Un-Assigned Assignments</span>
                 <span class="info-box-number">@moneyFormat($unassignedAmount)</span>
               </div>
             </div>
@@ -113,7 +113,7 @@
             <div class="info-box mb-3">
               <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-dollar-sign"></i></span>
               <div class="info-box-content">
-                <span class="info-box-text">Completed Assignments Amount</span>
+                <span class="info-box-text">Completed Assignments</span>
                 <span class="info-box-number">@moneyFormat($completedAmount)</span>
               </div>
             </div>

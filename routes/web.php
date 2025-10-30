@@ -4,6 +4,7 @@
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\WebAuthController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Web\AccountingController;
 use App\Http\Controllers\Web\AssignmentController;
 use App\Http\Controllers\Web\DownloadController;
@@ -18,6 +19,11 @@ require __DIR__.'/channels.php';
 
 Broadcast::routes(['middleware' => ['auth']]);
 
+Route::controller(NotificationController::class)->group(function(){
+    Route::get('/unread-notifications' ,'unreadAppraiser')->name('notifications');
+    Route::get('/markas-read/{id}' , 'markAsRead')->name('markas.read');
+    Route::get('/read-all' , 'readAll')->name('read.all');
+})->middleware('auth');
 
 Route::middleware(['prevent-back-history', 'CheckAgent'])->group(function () {
 

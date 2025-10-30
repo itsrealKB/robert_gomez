@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -70,3 +71,9 @@ Route::prefix('settings')->controller(SettingsController::class)->name('settings
 });
 
 Route::get('/feedbacks' ,[ FeedbackController::class,'index'])->name('feedbacks');
+
+Route::controller(NotificationController::class)->group(function(){
+    Route::get('/unread-notifications' ,'unread')->name('notifications');
+    Route::get('/markas-read/{id}' , 'markAsRead')->name('markas.read');
+    Route::get('/read-all' , 'readAll')->name('read.all');
+})->middleware('auth');

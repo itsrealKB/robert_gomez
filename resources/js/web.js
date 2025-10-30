@@ -9,19 +9,13 @@ if (window.userId) {
 }
 
 const headings = {
-    'assignment-accepted': 'Assignment Accepted',
-    'assignment-rejected': 'Assignment Rejected',
-    'assignment-completed': 'Assignment Completed',
-    'assignment-pending' : 'Assignment Pending',
-    'payment-request': 'Pay Change Request',
+    'assignment-assigned' : 'Assignment Assigned',
+    'payment-detail' : 'Payment Detail'
 };
 
 const messages = {
-    'assignment-accepted': 'has accepted the assignment.',
-    'assignment-rejected': 'has rejected the assignment.',
-    'assignment-completed': 'has completed the assignment.',
-    'assignment-pending': 'has changed assignment to pending.',
-    'payment-request': 'has added a payment change request.',
+    'assignment-assigned' : 'has assigned you a assignment.',
+    'payment-detail' : 'has added a payment detail.'
 };
 
 const notificationBadge = document.querySelector('#notification-badge');
@@ -75,11 +69,12 @@ async function updateNotification() {
         notificationContainer.innerHTML = '';
 
         if(notifications.length){
+            notificationContainer.style.paddingTop = '15px';
             notificationBadge.textContent = notifications.length;
-            const notificationHeader = document.createElement('div');
-            notificationHeader.classList.add('d-flex', 'justify-content-between','px-3','py-2');
-            notificationHeader.innerHTML = `<p>${notifications.length} notifications</p>
-            <a class='clear-all' ${notifications.length ? `href="${readAll}"` : 'onclick="return false;"'} >Clear All</a>`;
+            const notificationHeader = document.createElement('li');
+            notificationHeader.classList.add('d-flex', 'justify-content-between');
+            notificationHeader.innerHTML = `<p>${notifications.length} New ${notifications.length > 1 ? 'notifications' : 'notification'}</p>
+                                            <a class='clear-all' ${notifications.length ? `href="${readAll}"` : 'onclick="return false;"'} >Clear All</a>`;
             notificationContainer.append(notificationHeader);
         }
 
@@ -88,12 +83,14 @@ async function updateNotification() {
             const message = `${appraiser} ${messages[notification.type] || ''}`;
             const url = markAsRead.replace(':id', notification.id);
 
-            const container = document.createElement('div');
-            container.innerHTML = `<div class="dropdown-divider"></div>
-                                    <a href="${url}" class="dropdown-item">
-                                        ${message}
-                                        <span class="float-right text-muted text-sm">${formatTimeAgo(notification.created_at)}</span>
-                                    </a>`;
+            const container = document.createElement('li');
+            container.classList.add('notify-li');
+            container.innerHTML = `<div>
+                                        <a href="${url}">
+                                            <h6>${formatTimeAgo(notification.created_at)}</h6>
+                                            <p>${message}</p>
+                                        </a>
+                                    </div>`;
             notificationContainer.append(container);
         });
     }

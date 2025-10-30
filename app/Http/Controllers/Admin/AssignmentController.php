@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\NotificationCreated;
 use App\Helpers\GeoCodeHelper;
 use App\Helpers\Haversine;
 use App\Http\Controllers\Controller;
@@ -15,6 +16,7 @@ use App\Models\AssignmentPayment;
 use App\Models\ClientForm;
 use App\Models\GeneralForm;
 use App\Models\Guideline;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -67,6 +69,14 @@ class AssignmentController extends Controller
             'user_id' => $assignment->user_id
         ]);
 
+        $notification = Notification::create([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $request->agent,
+            'assignment_id' => $assignment->id,
+            'type' => 'assignment-assigned',
+        ]);
+
+        broadcast(new NotificationCreated($notification));
 
         return response()->json([
             'status' => true,
@@ -531,6 +541,15 @@ class AssignmentController extends Controller
 
             DB::commit();
 
+            $notification = Notification::create([
+                'sender_id' => auth()->id(),
+                'receiver_id' => $assignment->user_id,
+                'assignment_id' => $assignment->id,
+                'type' => 'payment-detail',
+            ]);
+
+            broadcast(new NotificationCreated($notification));
+
             return response()->json([
                 'status' => 'true',
                 'message' => 'Payment Details Updated Successfully.'
@@ -567,6 +586,15 @@ class AssignmentController extends Controller
             'price' => $request->price,
             'miles' => $request->miles
         ]);
+
+        $notification = Notification::create([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $payment->assignment->user_id,
+            'assignment_id' => $payment->assignment->id,
+            'type' => 'payment-detail',
+        ]);
+
+        broadcast(new NotificationCreated($notification));
 
         return response()->json([
             'status' => 'true',

@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-md-11 text-center">
-                    <img src="{{ asset('assets/auth/images/WoPuVP.png') }}" alt="">
+                    <img src="{{ asset('assets/auth/images/velocity-lite.png') }}" alt="">
                     <div class="login-wrapper">
                         <form action="">
                             <h2 class="forget-text">Reset Password</h2>

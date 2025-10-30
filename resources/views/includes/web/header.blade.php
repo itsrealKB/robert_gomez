@@ -3,7 +3,7 @@
         <div class="header-inner">
             <div class="logo-wrap">
                 <a href="{{ route('dashboard') }}" class="header-logo">
-                    <img src="{{ asset('assets/web/images/WoPuVP.png') }}" alt="Logo">
+                    <img src="{{ asset('assets/auth/images/velocity-lite.png') }}" style="width: 200px" alt="Logo">
                 </a>
                 <div class="hamburger hamburger2" id="menu-btn">
                     <i class="fa-solid fa-bars"></i>
@@ -68,38 +68,9 @@
                     <button class="btn  dropdown-toggle position-relative border-0" type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-regular fa-bell"></i>
-                        {{-- <span class="badge">2</span> --}}
+                        <span class="badge" id="notification-badge"></span>
                     </button>
-                    <ul class="dropdown-menu header-dropdown header-dropdown2">
-                        <li class="d-flex justify-content-between">
-                            <p>5 New notifications</p>
-                            <a class="" href="#">Clear All</a>
-                        </li>
-                        <li class="notify-li">
-                            <div>
-                                <a href="">
-                                    <h6>2min ago</h6>
-                                    <p>Donec dapibus mauris id odio ornare <br> tempus amet.</p>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="notify-li">
-                            <div>
-                                <a href="">
-                                    <h6>2min ago</h6>
-                                    <p>Donec dapibus mauris id odio ornare <br> tempus amet.</p>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="notify-li">
-                            <div>
-                                <a href="">
-                                    <h6>2min ago</h6>
-                                    <p>Donec dapibus mauris id odio ornare <br> tempus amet.</p>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
+                    <ul class="dropdown-menu header-dropdown header-dropdown2" id="notification-container"></ul>
                 </div>
 
                 <div class="dropdown">
