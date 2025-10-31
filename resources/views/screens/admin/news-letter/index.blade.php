@@ -15,26 +15,16 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Appraiser</th>
-                                        <th>Subject</th>
-                                        <th>Feedback</th>
+                                        <th>Email</th>
                                         <th>Created At</th>
-                                        <th>View Feedback</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($feedbacks as  $feedback)
+                                    @forelse ($newsLetters as $newsLetter)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $feedback->user->full_name }}</td>
-                                            <td>{{ $feedback->subject }}</td>
-                                            <td>{{ Str::limit($feedback->feedback, 50, '...') }}</td>
-                                            <td>{{ $feedback->created_at }}</td>
-                                            <td>
-                                                <button class="btn view-feedback" data-feedback="{{ $feedback->feedback }}">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </button>
-                                            </td>
+                                            <td>{{ $newsLetter->email }}</td>
+                                            <td>{{ $newsLetter->created_at }}</td>
                                         </tr>
                                     @empty
                                     @endforelse
@@ -67,19 +57,10 @@
                         data: "#",
                     },
                     {
-                        data: "Appraiser",
-                    },
-                    {
-                        data: "Subject",
-                    },
-                    {
-                        data: "Feedback"
+                        data: "Email",
                     },
                     {
                         data: "Created At",
-                    },
-                    {
-                        data: "View Feedback",
                     },
                 ],
             });
@@ -98,22 +79,4 @@
             table.on('draw.dt', setOriginalValues);
         });
     </script>
-
-    {{-- Feedback Full View --}}
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', '.view-feedback', function () {
-                const feedback = $(this).data('feedback');
-                Swal.fire({
-                    title: 'Feedback Full View!',
-                    icon: 'info',
-                    html: feedback,
-                    showConfirmButton: true,
-                    confirmButtonText: 'Close',
-                    width: '600px',
-                });
-            });
-        });
-    </script>
-    {{-- Feedback Full View --}}
 @endpush

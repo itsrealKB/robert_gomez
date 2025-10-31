@@ -188,6 +188,7 @@ Route::get('/passwordupdate', function () {
 })->name('passwordupdate');
 
 // Landing Page.
+
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/landing-page', 'index')->name('landing.page');
     Route::post('/register', 'register')->name('landing.page.register');

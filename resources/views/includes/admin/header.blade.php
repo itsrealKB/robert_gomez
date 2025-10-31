@@ -224,6 +224,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.news.letters') }}" class="nav-link d-flex align-items-center">
+                                <i class="fa-solid fa-newspaper" style="font-size: 22px; margin-right: 10px;"></i>
+                                <p>
+                                    News Letters
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.settings.index') }}" class="nav-link d-flex align-items-center">
                                 <i class="fa-solid fa-gear" style="font-size: 22px; margin-right: 10px;"></i>
                                 <p>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\NewContactUsMail;
 use App\Mail\NewRegistrationMail;
+use App\Models\NewsLetter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -61,13 +62,15 @@ class LandingPageController extends Controller
         }
     }
 
-    // Create NewsLetter Model & migration & Admin Side View.
+    // NewsLetter Store
     public function newsLetter(Request $request)
     {
-        dd($request->all());
 
         try {
-            NewsLetter::create($request->all());
+
+            NewsLetter::create([
+                'email' => $request->email
+            ]);
 
             return response()->json([
                 'status' => true,
@@ -82,5 +85,12 @@ class LandingPageController extends Controller
             ],404);
 
         }
+    }
+
+    // NewsLetters Admin View.
+    public function newsLetters()
+    {
+        $newsLetters = NewsLetter::all();
+        return view('screens.admin.news-letter.index' , compact('newsLetters'));
     }
 }

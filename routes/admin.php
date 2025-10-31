@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -70,7 +71,11 @@ Route::prefix('settings')->controller(SettingsController::class)->name('settings
     Route::post('guidelines-store', 'guidelinesStore')->name('guidelines.store');
 });
 
+// Feedback
 Route::get('/feedbacks' ,[ FeedbackController::class,'index'])->name('feedbacks');
+
+// NewsLetter
+Route::get('/news-letters' ,[ LandingPageController::class,'newsLetters'])->name('news.letters');
 
 Route::controller(NotificationController::class)->group(function(){
     Route::get('/unread-notifications' ,'unread')->name('notifications');
