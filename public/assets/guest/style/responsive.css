@@ -1,0 +1,517 @@
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1470px !important;
+    }
+}
+
+@media (max-width: 1440px) {
+    .container {
+        max-width: 1300px !important;
+    }
+
+    .nav-wrapper {
+        gap: 40px;
+    }
+
+    .nav-wrapper li a,
+    .primary-btn {
+        font-size: 16px;
+    }
+
+    .logo-wrapper img {
+        width: 270px;
+    }
+
+    .register-area a img {
+        width: 42px;
+    }
+
+    .banner-hd,
+    .sec-hd {
+        font-size: 55px;
+    }
+
+    .contact-sec video {
+        height: 630px;
+    }
+
+    .sec-para {
+        font-size: 18px;
+    }
+
+    .about-sec {
+        padding: 145px 0;
+    }
+
+    .service-box {
+        font-size: 15px;
+    }
+
+    .footer ul li a {
+        font-size: 27px;
+    }
+
+    .footer h5 {
+        font-size: 22px;
+    }
+
+    .footer h4 {
+        font-size: 30px;
+    }
+
+    .news-letter-form button {
+        padding: 14px 28px;
+    }
+
+    .bottom-bar p {
+        font-size: 19px;
+    }
+
+    .bottom-bar {
+        padding: 30px 0;
+    }
+}
+
+@media (max-width: 1366px) {
+    .package-sec .sec-hd {
+        font-size: 60px;
+    }
+
+    .package-sec img {
+        width: 221px;
+        margin-bottom: 46px !important;
+    }
+
+    .package-sec h2 {
+        font-size: 35px !important;
+        margin-bottom: 48px !important;
+        margin-top: 21px !important;
+    }
+
+    .contact-sec .field-wrapper input,
+    .contact-sec .field-wrapper textarea {
+        font-size: 15px;
+    }
+
+    .accordion-heading {
+        font-size: 25px;
+    }
+
+    .accordion-heading-2 {
+        font-size: 30px;
+        padding: 31px 0;
+    }
+
+    .contact-sec video {
+        height: 615px;
+    }
+
+}
+
+@media (max-width: 1280px) {
+    .container {
+        max-width: 1140px !important;
+    }
+
+    .content-area {
+        padding-top: 310px;
+        padding-bottom: 180px;
+    }
+
+    .news-letter-form input {
+        width: 225px;
+        font-size: 16px;
+    }
+
+    .social-icons-area a {
+        height: 50px;
+        width: 50px;
+    }
+
+    .social-icons-area {
+        gap: 20px;
+    }
+
+    .contact-sec form button {
+        font-size: 17px;
+    }
+
+    .nav-wrapper {
+        gap: 31px;
+    }
+
+    .about-sec .sec-hd {
+        font-size: 48px !important;
+    }
+
+    .about-sec {
+        padding: 101px 0;
+    }
+
+}
+
+@media (max-width: 1200px) {
+    .about-img {
+        left: 140px;
+    }
+
+    .content-area {
+        padding-top: 300px;
+        padding-bottom: 155px;
+    }
+
+    .sec-para {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        max-width: 970px !important;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        font-size: 15px;
+        padding: 8px 28px;
+    }
+
+    .logo-wrapper img {
+        width: 230px;
+    }
+
+    .nav-wrapper li a {
+        font-size: 13px;
+    }
+
+    .banner-hd,
+    .sec-hd {
+        font-size: 49px;
+    }
+
+    .about-sec .sec-hd {
+        font-size: 42px !important;
+    }
+
+    .content-area {
+        padding-top: 257px;
+        padding-bottom: 160px;
+    }
+
+    .sec-para {
+        font-size: 15px;
+    }
+
+
+    .contact-sec .field-wrapper input,
+    .contact-sec .field-wrapper textarea {
+        font-size: 16px;
+        padding: 18px 25px;
+    }
+
+    .contact-sec video {
+        height: 580px;
+    }
+
+    .news-letter-form input {
+        width: 190px;
+        font-size: 15px;
+    }
+
+    .news-letter-form button {
+        padding: 14px 24px;
+        font-size: 14px !important;
+    }
+
+    .footer-logo {
+        width: 260px;
+    }
+
+    .footer h5 {
+        font-size: 18px;
+    }
+
+    .footer h4 {
+        font-size: 27px;
+    }
+
+    .footer ul li a {
+        font-size: 24px;
+    }
+
+    .social-icons-area a {
+        height: 48px;
+        width: 48px;
+        font-size: 21px;
+    }
+
+    .bottom-bar p {
+        font-size: 17px;
+    }
+
+    .footer {
+        padding-bottom: 170px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        max-width: 900px !important;
+    }
+
+    .about-img {
+        transform: matrix3d(-1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1) !important;
+        right: 0 !important;
+        left: unset !important;
+    }
+
+    .about-sec {
+        padding-bottom: 200px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 710px !important;
+    }
+
+    .nav-wrapper {
+        display: none;
+    }
+
+    .content-area {
+        padding-bottom: 240px;
+    }
+
+
+    .footer {
+        padding-top: 80px;
+        padding-bottom: 70px;
+    }
+
+    .bottom-bar .d-flex {
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 10px;
+    }
+
+    .news-letter-form input {
+        width: 300px;
+    }
+
+    .news-letter-form {
+        width: 100%;
+    }
+
+    .contact-sec video {
+        height: 480px;
+    }
+
+    .package-sec .sec-hd {
+        font-size: 47px;
+    }
+
+    .accordion-heading {
+        font-size: 19px;
+    }
+
+    .service-box {
+        font-size: 13px;
+    }
+
+    .accordion-body {
+        font-size: 12px;
+    }
+
+    .accordion-body br {
+        display: none;
+    }
+
+    .accordion-heading-2 {
+        font-size: 30px;
+        padding: 26px 0;
+    }
+
+    .feature-box {
+        font-size: 14px;
+    }
+
+    .package-sec .container {
+        overflow-x: auto;
+    }
+
+    .package-sec .row {
+        width: 1105px;
+    }
+
+    .package-slider-wrapper {
+        display: flex;
+    }
+
+    .swiper-slide {
+        width: unset !important;
+    }
+
+    .package-sec img {
+        width: 167px;
+        margin-bottom: 46px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .package-sec .sec-hd {
+        font-size: 37px;
+        margin-bottom: 51px;
+    }
+
+    .package-sec .col-lg-6 {
+        padding: 0 12px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        max-width: 540px !important;
+    }
+
+    .logo-wrapper img {
+        width: 160px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        font-size: 11px;
+        padding: 8px 20px;
+    }
+
+    .register-area a img {
+        width: 28px;
+    }
+
+    .banner-hd,
+    .sec-hd {
+        font-size: 43px;
+        text-align: center;
+    }
+
+    .sec-para {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .sec-para br,
+    .laptop-img,
+    .about-img {
+        display: none;
+    }
+
+    .content-area {
+        padding-bottom: 110px;
+    }
+
+    .hero-banner {
+        background-position: center;
+    }
+
+    .about-sec {
+        padding: 75px 0 !important;
+    }
+
+    .contact-sec video {
+        height: 300px;
+    }
+
+    .contact-sec .field-wrapper input,
+    .contact-sec .field-wrapper textarea,
+    .accordion-body {
+        font-size: 13px;
+        padding: 11px 20px;
+    }
+
+    .contact-sec form button {
+        font-size: 13px;
+        padding: 15px 0;
+        margin-top: 28px;
+    }
+
+    .bottom-bar p {
+        font-size: 14px;
+    }
+
+    .news-letter-form {
+        width: 100%;
+    }
+
+    .news-letter-form input {
+        width: 245px;
+    }
+
+    .footer ul li a {
+        font-size: 20px;
+    }
+
+    .content-area .btn-wrapper {
+        justify-content: center;
+    }
+
+    .modal-title {
+        font-size: 31px;
+    }
+
+    .modal-body,
+    .modal-header {
+        padding: 15px 20px !important;
+    }
+
+    .modal-content input {
+        font-size: 13px;
+        padding: 10px 15px;
+    }
+
+    .modal-content label {
+        font-size: 15px;
+    }
+
+    .modal-body .inp-wrap {
+        margin-bottom: 11px;
+    }
+
+    .f-logo-wrap {
+        text-align: center;
+    }
+
+    .social-icons-area {
+        gap: 16px;
+        justify-content: center;
+    }
+
+    .dot-box {
+        justify-content: center;
+    }
+
+    .animate li,
+    .footer h4,
+    .footer h5 {
+        text-align: center;
+    }
+
+
+    .social-icons-area a {
+        height: 44px;
+        width: 44px;
+        font-size: 19px;
+    }
+
+
+}
+
+@media (max-width: 375px) {
+    .news-letter-form input {
+        width: 230px;
+    }
+}

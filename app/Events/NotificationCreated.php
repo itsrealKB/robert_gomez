@@ -33,6 +33,11 @@ class NotificationCreated implements ShouldBroadcastNow
         return new PrivateChannel('user.' . $this->notification->receiver_id);
     }
 
+    /**
+     * Get the name the event should broadcast as.
+     * This will be prefixed with a dot in the frontend.
+     */
+
     public function broadcastAs()
     {
         return 'notification.created';

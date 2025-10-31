@@ -4,6 +4,7 @@
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\WebAuthController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Web\AccountingController;
 use App\Http\Controllers\Web\AssignmentController;
@@ -185,3 +186,12 @@ Route::get('/resetPassword', function () {
 Route::get('/passwordupdate', function () {
     return view('auth.web.passwordUpdate');
 })->name('passwordupdate');
+
+// Landing Page.
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/landing-page', 'index')->name('landing.page');
+    Route::post('/register', 'register')->name('landing.page.register');
+    Route::post('/contact-us', 'contactUs')->name('landing.page.contact');
+    Route::post('/news-letter', 'newsLetter')->name('landing.page.news.letter');
+});
+
