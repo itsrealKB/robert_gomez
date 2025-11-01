@@ -14,11 +14,12 @@
                 <div class="date" id="date"></div>
             </div>
             <div class="notify-area">
-                <div class="dropdown">
+
+                {{-- <div class="dropdown">
                     <button class="btn  dropdown-toggle position-relative" type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-regular fa-comment"></i>
-                        {{-- <span class="badge">2</span> --}}
+                        <span class="badge">2</span>
                     </button>
                     <ul class="dropdown-menu header-dropdown header-dropdown2 header-dropdown1">
                         <li class="d-flex justify-content-between">
@@ -62,7 +63,7 @@
                             <a href="{{ route('messagePg')}}" class="load-btn">View More</a>
                         </li>
                     </ul>
-                </div>
+                </div> --}}
 
                 <div class="dropdown">
                     <button class="btn  dropdown-toggle position-relative border-0" type="button"
@@ -78,7 +79,7 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ auth()->user()->avatar !== null ? asset('images/pfp/'.auth()->user()->avatar) : asset('assets/web/images/no-profile-pic.jfif') }}" style="border-radius:50%; height:60px; !important" alt="">
                     </button>
-                    <ul class="dropdown-menu header-dropdown">
+                    <ul class="dropdown-menu header-dropdown shadow-lg">
                         <li>
                             <a class="dropdown-item dropdown-link" href="{{ route('profile.index')}}">Profile</a>
                         </li>

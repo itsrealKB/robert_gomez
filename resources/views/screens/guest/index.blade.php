@@ -584,7 +584,7 @@
                 },
             },
 
-            errorPlacement: function(error, element) {
+            errorPlacement : function(error, element) {
                 if (element.attr("name") == "email") {
                     $("#newsletter-form").next("label.error").remove();
                     error.insertAfter("#newsletter-form");
